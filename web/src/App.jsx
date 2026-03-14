@@ -1,15 +1,30 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import { Menu, X, ArrowRight, Activity, Zap, Layers, BarChart3, ShieldCheck, Globe, Cpu, Download, Users, User, UserPlus, Building2, Smartphone, MapPin, Clock, Wrench, PenTool, Sofa, Droplets, Fan, Leaf, Trash2, FileText, Router, ChevronRight, CheckCircle2, Heart, Handshake, Phone, Mail, HelpCircle, ChevronDown, ChevronLeft, Calendar, Newspaper, ArrowLeft, Target, Share2, Facebook, Twitter, Linkedin, AlertTriangle } from 'lucide-react';
 import STANDARDS_DB from './data/standards';
+import { STANDARD_SLUGS, getCategoryAndKeyBySlug } from './data/standardSlugs';
 import { ALL_CASES, ALL_NEWS } from './data/content';
+import { contentImageSrc } from './data/contentApi';
+import { useContent } from './context/ContentContext';
 import { BRAND_GRADIENT, PAI_GRADIENT_TEXT, BG_GRADIENT_LIGHT, CARD_THEME_GLOW } from './constants/theme';
 
 // --- 其他数据 ---
-const CLIENTS = Array(15).fill(null).map((_, i) => ({
-  name: `Client ${i + 1}`,
-  src: "https://placehold.co/100x100/f3f4f6/a1a1aa?text=LOGO" 
-}));
+// 客户 LOGO 轮播：使用本地 client logo 文件夹中的实际 Logo，尺寸仍按组件样式约束为 100x100
+const CLIENTS = [
+  { name: 'Nestle', src: '/client logo/nestle-logo-2.svg' },
+  { name: 'Siemens', src: '/client logo/siemens.svg' },
+  { name: 'BMW', src: '/client logo/bmw-10.svg' },
+  { name: 'Huawei', src: '/client logo/huawei-pure-.svg' },
+  { name: 'Xiaomi', src: '/client logo/xiaomi-3.svg' },
+  { name: 'Meituan', src: '/client logo/Meituan_idd2w_6T97_0.svg' },
+  { name: 'Kongsberg', src: '/client logo/kongsberg.svg' },
+  { name: 'Novo Nordisk', src: '/client logo/novo-nordisk-1.svg' },
+  { name: 'ISS', src: '/client logo/iss-4.svg' },
+  { name: 'Sodexo', src: '/client logo/sodexo-1.svg' },
+  { name: 'Continental', src: '/client logo/continental-2-1.svg' },
+  { name: 'British', src: '/client logo/british.svg' },
+  { name: 'Omron', src: '/client logo/omron.svg' },
+];
 
 const HISTORY = [
   { year: "2020", title: "创立元年", desc: "公司正式成立，确立“快速工程”服务理念。同年携手西门子，提供全国改选维修年度框架协议服务，奠定行业基础。" },
@@ -48,11 +63,11 @@ const FAQ_DATA = [
 
 // --- 主组件 ---
 
-function buildNavigate(navigate, setMobileMenuOpen) {
+function buildNavigate(navigate, setMobileMenuOpen, news, cases) {
   return (page, data = null) => {
     setMobileMenuOpen(false);
     if (page === 'detail' && data) {
-      const isNews = ALL_NEWS.some((n) => n.id === data.id);
+      const isNews = (news || ALL_NEWS).some((n) => n.id === data.id);
       navigate(isNews ? `/news/${data.id}` : `/cases/${data.id}`);
     } else {
       const pathMap = { home: '/', news: '/news', 'news-list': '/news-list', 'cases-list': '/cases-list', standards: '/standards', about: '/about', join: '/join', help: '/help' };
@@ -71,33 +86,22 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  const navigateTo = buildNavigate(navigate, setMobileMenuOpen);
+  const { news, cases } = useContent();
+  const navigateTo = buildNavigate(navigate, setMobileMenuOpen, news, cases);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-[#A1D573] selection:text-white overflow-x-hidden relative">
       
       {/* 顶部悬浮毛玻璃导航栏 (在 standards 页面隐藏) */}
-      {pathname !== '/standards' && (
+      {!pathname.startsWith('/standards') && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-auto max-w-[95%] pointer-events-none">
           <nav className="pointer-events-auto bg-gray-200/50 backdrop-blur-md border border-white/60 rounded-full px-8 py-3.5 flex items-center justify-center gap-10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-300">
             
             <div className="flex items-center gap-3 cursor-pointer group shrink-0" onClick={() => navigateTo('home')}>
-              <div className="w-7 h-7 relative">
-                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                       <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#FFEB69" />
-                          <stop offset="100%" stopColor="#A1D573" />
-                       </linearGradient>
-                    </defs>
-                    <path d="M10 30 C10 20 20 10 30 10 L60 10 C70 10 70 25 60 25 L40 25 L40 55 C40 65 25 65 25 55 L25 30 C25 25 10 30 10 30 Z" fill="url(#logoGradient)" className="group-hover:opacity-90 transition-opacity" />
-                    <path d="M55 45 C65 45 75 45 75 45 L75 70 C75 80 60 85 60 85 L30 85 C20 85 20 70 30 70 L55 70 L55 45 Z" fill="url(#logoGradient)" transform="rotate(180 52.5 65)" className="group-hover:opacity-90 transition-opacity"/>
-                 </svg>
-              </div>
-              <span className="text-xl font-bold tracking-tighter text-gray-900 whitespace-nowrap">JustPai</span>
+              <img src="/justpai-logo-darkgreen-1.png" alt="这么派" className="w-8 h-8 object-contain group-hover:opacity-90 transition-opacity" aria-hidden />
             </div>
 
-            <div className="hidden md:flex items-center gap-8 text-sm font-medium shrink-0">
+            <div className="hidden md:flex items-center gap-12 text-sm font-medium shrink-0">
               <button onClick={() => navigateTo('home')} className={`whitespace-nowrap transition-colors ${pathname === '/' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>首页</button>
               <button onClick={() => navigateTo('news')} className={`whitespace-nowrap transition-colors ${isNewsCenter(pathname) ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>新闻中心</button>
               <button onClick={() => navigateTo('about')} className={`whitespace-nowrap transition-colors ${pathname === '/about' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>关于我们</button>
@@ -112,7 +116,7 @@ export default function App() {
         </div>
       )}
 
-      {mobileMenuOpen && pathname !== '/standards' && (
+      {mobileMenuOpen && !pathname.startsWith('/standards') && (
         <div className="md:hidden fixed top-24 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-gray-100/90 backdrop-blur-xl border border-white/60 rounded-3xl p-6 flex flex-col gap-6 shadow-2xl z-[90]">
           <button onClick={() => navigateTo('home')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">首页</button>
           <button onClick={() => navigateTo('news')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">新闻中心</button>
@@ -132,6 +136,7 @@ export default function App() {
           <Route path="/news/:id" element={<DetailPage onNavigate={navigateTo} />} />
           <Route path="/cases/:id" element={<DetailPage onNavigate={navigateTo} />} />
           <Route path="/standards" element={<StandardsPage onNavigate={navigateTo} />} />
+          <Route path="/standards/:slug" element={<StandardsPage onNavigate={navigateTo} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/join" element={<JoinPage />} />
           <Route path="/help" element={<HelpPage />} />
@@ -139,13 +144,13 @@ export default function App() {
       </main>
 
       {/* 公共页脚 (在 standards 页面隐藏) */}
-      {pathname !== '/standards' && (
+      {!pathname.startsWith('/standards') && (
         <footer className="bg-gray-900 border-t border-gray-800 pt-20 pb-10 px-6 text-white relative z-20">
-           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
               <div className="col-span-1 md:col-span-1">
                  <div className="flex items-center gap-2 mb-6">
-                    <div className={`w-6 h-6 rounded-sm ${BRAND_GRADIENT}`}></div>
-                    <span className="text-xl font-bold">JustPai</span>
+                    <img src="/justpai-logo-darkgreen-2.png" alt="这么派" className="w-8 h-8 object-contain" />
+                    <span className="text-xl font-bold">这么派</span>
                  </div>
                  <p className="text-gray-400 text-sm">
                     专注企业快速工程服务<br/>
@@ -154,22 +159,12 @@ export default function App() {
               </div>
               
               <div>
-                 <h4 className="font-bold text-white mb-6">服务</h4>
-                 <ul className="space-y-4 text-gray-400 text-sm">
-                    <li><a href="#" className="hover:text-[#A1D573] transition-colors">智能运维</a></li>
-                    <li><a href="#" className="hover:text-[#A1D573] transition-colors">工程改造</a></li>
-                    <li><a href="#" className="hover:text-[#A1D573] transition-colors">企业保洁</a></li>
-                    <li><a href="#" className="hover:text-[#A1D573] transition-colors">资产管理</a></li>
-                 </ul>
-              </div>
-
-              <div>
                  <h4 className="font-bold text-white mb-6">公司</h4>
                  <ul className="space-y-4 text-gray-400 text-sm">
                     <li><button onClick={() => navigateTo('about')} className="hover:text-[#A1D573] transition-colors">关于我们</button></li>
                     <li><button onClick={() => navigateTo('join')} className="hover:text-[#A1D573] transition-colors">加入我们</button></li>
                     <li><button onClick={() => navigateTo('news')} className="hover:text-[#A1D573] transition-colors">新闻中心</button></li>
-                    <li><a href="#" className="hover:text-[#A1D573] transition-colors">隐私协议</a></li>
+                    <li><button onClick={() => navigateTo('help')} className="hover:text-[#A1D573] transition-colors">帮助中心</button></li>
                  </ul>
               </div>
 
@@ -185,11 +180,6 @@ export default function App() {
            
            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 text-xs text-gray-500">
               <p>&copy; 2024 JustPai Technology. All rights reserved.</p>
-              <div className="flex gap-4 mt-4 md:mt-0">
-                 <span>WeChat</span>
-                 <span>LinkedIn</span>
-                 <span>Twitter</span>
-              </div>
            </div>
         </footer>
       )}
@@ -267,11 +257,12 @@ export default function App() {
 function DetailPage({ data: dataProp, onNavigate }) {
   const { id: idParam } = useParams();
   const { pathname } = useLocation();
+  const { news, cases } = useContent();
   const dataFromUrl = (() => {
     if (dataProp) return dataProp;
     if (!idParam) return null;
     const isNews = pathname.startsWith('/news');
-    const list = isNews ? ALL_NEWS : ALL_CASES;
+    const list = isNews ? news : cases;
     const item = list.find((i) => String(i.id) === String(idParam));
     return item || null;
   })();
@@ -305,7 +296,7 @@ function DetailPage({ data: dataProp, onNavigate }) {
             {data.title}
           </h1>
           
-          <div className="flex items-center gap-6 text-sm text-gray-500 mb-8 pb-8 border-b border-gray-100">
+          <div className="flex items-center gap-6 text-sm text-gray-500 mb-8 pb-8 border-b border-gray-100 flex-wrap">
             <div className="flex items-center gap-2">
               <Calendar size={16} />
               {data.date || 'Unknown Date'}
@@ -314,6 +305,11 @@ function DetailPage({ data: dataProp, onNavigate }) {
               <User size={16} />
               {data.author || 'JustPai Official'}
             </div>
+            {data.category && (
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded bg-gray-100 text-gray-700">{data.category}</span>
+              </div>
+            )}
           </div>
 
           {data.desc && (
@@ -323,10 +319,6 @@ function DetailPage({ data: dataProp, onNavigate }) {
               </p>
             </div>
           )}
-
-          <div className="mb-12 rounded-2xl overflow-hidden shadow-lg">
-            <img src={data.img} alt={data.title} className="w-full h-auto object-cover" />
-          </div>
 
           <div className="prose prose-lg max-w-none text-gray-600">
             {data.content && data.content.map((block, index) => {
@@ -340,7 +332,7 @@ function DetailPage({ data: dataProp, onNavigate }) {
                 case 'img':
                   return (
                     <div key={index} className="my-8">
-                      <img src={block.value} alt="Content" className="rounded-xl shadow-md w-full" />
+                      <img src={contentImageSrc(block.value)} alt="Content" className="rounded-xl shadow-md w-full" />
                       {block.caption && <p className="text-center text-sm text-gray-400 mt-2">{block.caption}</p>}
                     </div>
                   );
@@ -370,8 +362,8 @@ function DetailPage({ data: dataProp, onNavigate }) {
               </h4>
               <ul className="space-y-4">
                 {(() => {
-                  const isFromNews = ALL_NEWS.some((n) => n.id === data.id);
-                  const sourceList = isFromNews ? ALL_NEWS : ALL_CASES;
+                  const isFromNews = news.some((n) => n.id === data.id);
+                  const sourceList = isFromNews ? news : cases;
                   const related = sourceList.filter((item) => item.id !== data.id).slice(0, 3);
                   return related.map((item, i) => (
                     <li key={item.id} className="group cursor-pointer" onClick={() => onNavigate('detail', item)}>
@@ -394,12 +386,16 @@ function DetailPage({ data: dataProp, onNavigate }) {
 
 
 function StandardsPage({ onNavigate }) {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubItem, setActiveSubItem] = useState(null);
+  const [activeStandardIntro, setActiveStandardIntro] = useState('质量标准化');
 
   const categories = [
     {
@@ -492,6 +488,16 @@ function StandardsPage({ onNavigate }) {
     }
   ];
 
+  // 根据 URL slug 定位到对应分类与子项（分享链接或刷新时）
+  useEffect(() => {
+    if (!slug) return;
+    const found = getCategoryAndKeyBySlug(slug, categories);
+    if (found) {
+      setActiveCategory(found.categoryName);
+      setActiveSubItem(found.itemKey);
+    }
+  }, [slug]);
+
   return (
     <div className="bg-white min-h-screen text-gray-900 font-sans selection:bg-[#A1D573] selection:text-white flex flex-col">
       {/* 顶部返回按钮与简易Header */}
@@ -526,10 +532,15 @@ function StandardsPage({ onNavigate }) {
                     {category.sub.map((subItem) => {
                       const itemKey = typeof subItem === 'string' ? subItem : subItem.key;
                       const itemName = typeof subItem === 'string' ? subItem : subItem.name;
+                      const standardSlug = STANDARD_SLUGS[itemKey];
                       return (
                         <li key={itemKey}>
                           <button 
-                            onClick={() => setActiveSubItem(itemKey)}
+                            onClick={() => {
+                              setActiveCategory(category.name);
+                              setActiveSubItem(itemKey);
+                              if (standardSlug) navigate(`/standards/${standardSlug}`);
+                            }}
                             className={`text-sm text-left w-full transition-colors ${activeSubItem === itemKey ? 'text-[#A1D573] font-bold' : 'text-gray-500 hover:text-gray-900 hover:font-medium'}`}
                           >
                             {itemName}
@@ -862,17 +873,83 @@ function StandardsPage({ onNavigate }) {
                    <p>
                      我们的《全域智能服务管控标准》历经数百个标杆项目的实战打磨，涵盖了从 <strong>环境保护、安全生产</strong> 到 <strong>健康管理、工艺质量</strong> 的每一个核心控制点。这不仅仅是一份写在纸上的文档，它更是 1000+ JustPai 资深工程师日复一日的行动纲领，是我们对“不留死角、不留隐患”的庄严承诺。
                    </p>
-                   
-                   <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100 mt-12 shadow-sm">
-                      <h4 className="font-bold text-gray-900 text-lg mb-6 flex items-center gap-2">
-                         核心管控维度概览
-                      </h4>
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 list-none pl-0">
-                         <li className="flex items-center gap-3 font-medium text-gray-700 m-0"><div className="w-2 h-2 rounded-full bg-[#FFEB69]"></div> 零隐患安全生产机制</li>
-                         <li className="flex items-center gap-3 font-medium text-gray-700 m-0"><div className="w-2 h-2 rounded-full bg-[#A1D573]"></div> 医疗级环境保护策略</li>
-                         <li className="flex items-center gap-3 font-medium text-gray-700 m-0"><div className="w-2 h-2 rounded-full bg-blue-400"></div> 无尘无痕卫生保洁体系</li>
-                         <li className="flex items-center gap-3 font-medium text-gray-700 m-0"><div className="w-2 h-2 rounded-full bg-purple-400"></div> 全链条成品与物料保护</li>
-                      </ul>
+
+                   {/* 五大标准化体系介绍区块 */}
+                   <div className="mt-16 mb-12">
+                     <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+                       <Layers className="text-[#FFEB69]" size={28} />
+                       全维标准化驱动体系
+                     </h3>
+
+                     <div className="flex flex-col md:flex-row gap-8 bg-gray-50/50 p-2 rounded-3xl border border-gray-100">
+                       {/* 左侧竖向导航 */}
+                       <div className="flex md:flex-col gap-2 overflow-x-auto no-scrollbar md:w-1/3 shrink-0 p-4">
+                         {['质量标准化', '服务标准化', '流程标准化', 'EHS标准化', '产品标准化'].map((std) => (
+                           <button
+                             key={std}
+                             onClick={() => setActiveStandardIntro(std)}
+                             className={`text-left px-5 py-4 rounded-xl transition-all duration-300 font-bold whitespace-nowrap ${
+                               activeStandardIntro === std
+                                 ? 'bg-white text-gray-900 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 scale-105 md:scale-100 md:translate-x-2'
+                                 : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                             }`}
+                           >
+                             {std}
+                           </button>
+                         ))}
+                       </div>
+
+                       {/* 右侧内容展示区 */}
+                       <div className="flex-1 bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden min-h-[300px] flex flex-col justify-center">
+                         {/* 装饰性背景发光 */}
+                         <div className="absolute -top-12 -right-12 w-40 h-40 bg-[#A1D573] rounded-full blur-[80px] opacity-10"></div>
+
+                         {activeStandardIntro === '质量标准化' && (
+                           <div className="animate-fade-in-up">
+                             <h4 className="text-xl font-bold text-gray-900 mb-4">杜绝参差不齐，交付即是标杆</h4>
+                             <p className="text-gray-600 leading-relaxed">
+                               我们摒弃了传统工程行业“看师傅手艺”的盲盒模式。通过建立详尽的工艺工法库、节点验收规范和防错机制，确保每一颗螺丝的拧紧扭矩、每一根线缆的走向弧度都符合统一的工业级要求。无论是百平米的微改，还是万平米的整装，JustPai 的质量输出始终如一。
+                             </p>
+                           </div>
+                         )}
+
+                         {activeStandardIntro === '服务标准化' && (
+                           <div className="animate-fade-in-up">
+                             <h4 className="text-xl font-bold text-gray-900 mb-4">有温度的体验，有刻度的规范</h4>
+                             <p className="text-gray-600 leading-relaxed">
+                               服务不仅仅是维修设备，更是维护客户的心情。我们对工程师的仪容仪表、入场话术、现场沟通及撤场清理等每一个交互触点进行了严格规定。从佩戴防静电鞋套到铺设专属保护垫，将隐形的“服务态度”转化为可见的“服务刻度”。
+                             </p>
+                           </div>
+                         )}
+
+                         {activeStandardIntro === '流程标准化' && (
+                           <div className="animate-fade-in-up">
+                             <h4 className="text-xl font-bold text-gray-900 mb-4">数字闭环，消除信息黑洞</h4>
+                             <p className="text-gray-600 leading-relaxed">
+                               依托 JustPai 强大的线上数字化平台，我们将复杂的工程运维切分为标准的SOP节点。从需求发起、智能派单、现场签到、过程记录到最终验收验收评价，所有流程线上流转、不可逆、防篡改。让进度100%透明，让管理成本降至最低。
+                             </p>
+                           </div>
+                         )}
+
+                         {activeStandardIntro === 'EHS标准化' && (
+                           <div className="animate-fade-in-up">
+                             <h4 className="text-xl font-bold text-gray-900 mb-4">敬畏生命，守护绿色底线</h4>
+                             <p className="text-gray-600 leading-relaxed">
+                               EHS (Environment, Health, Safety) 是我们一切工作的前提。我们制定了极其严苛的环保与安全双轨红线。从噪音与粉尘的源头抑制、有毒有害物质的零容忍，到高空与动火作业的强制审批，JustPai 致力于打造零伤害、零污染的施工运维环境。
+                             </p>
+                           </div>
+                         )}
+
+                         {activeStandardIntro === '产品标准化' && (
+                           <div className="animate-fade-in-up">
+                             <h4 className="text-xl font-bold text-gray-900 mb-4">像点外卖一样采购工程服务</h4>
+                             <p className="text-gray-600 leading-relaxed">
+                               我们将极度非标的工程与运维服务，解构成500+项可直接“加入购物车”的标准化产品（SKU）。清晰的计价模型、明确的交付边界和承诺的服务SLA，让企业客户彻底告别黑箱报价和扯皮扯筋，实现“所需即所得”。
+                             </p>
+                           </div>
+                         )}
+                       </div>
+                     </div>
                    </div>
 
                    <div className="mt-12 p-6 bg-white border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] rounded-2xl flex items-start gap-4">
@@ -897,9 +974,9 @@ function StandardsPage({ onNavigate }) {
 // ================= 子页面组件 =================
 
 function HomePage({ onNavigate }) {
-  // 首页卡片：按时间排序后取最新 4 条
-  const featuredCases = [...ALL_CASES].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
-  const featuredNews = [...ALL_NEWS].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+  const { news, cases } = useContent();
+  const featuredCases = [...(cases || ALL_CASES)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+  const featuredNews = [...(news || ALL_NEWS)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
 
   return (
     <>
@@ -954,7 +1031,11 @@ function HomePage({ onNavigate }) {
                <div className="flex animate-marquee whitespace-nowrap py-4 items-center">
                   {[...CLIENTS, ...CLIENTS].map((client, index) => (
                     <div key={index} className="mx-8 flex items-center justify-center min-w-[100px]">
-                       <img src={client.src} alt={client.name} className="h-16 w-16 md:h-20 md:w-20 object-contain rounded-lg grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-default filter opacity-60" />
+                      <img
+                        src={client.src}
+                        alt={client.name}
+                        className="h-16 w-16 md:h-20 md:w-20 object-contain rounded-lg transition-transform duration-300 cursor-default"
+                      />
                     </div>
                   ))}
                </div>
@@ -1084,7 +1165,7 @@ function HomePage({ onNavigate }) {
                     className={`rounded-2xl overflow-hidden cursor-pointer group ${CARD_THEME_GLOW}`}
                   >
                      <div className="h-48 overflow-hidden relative rounded-t-2xl">
-                        <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={contentImageSrc(item.img)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
                      </div>
                      <div className="p-6">
@@ -1136,7 +1217,7 @@ function HomePage({ onNavigate }) {
                     className={`rounded-2xl overflow-hidden cursor-pointer group ${CARD_THEME_GLOW}`}
                   >
                      <div className="h-48 overflow-hidden relative rounded-t-2xl">
-                        <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={contentImageSrc(item.img)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                      </div>
                      <div className="p-6">
                         <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
@@ -1157,9 +1238,9 @@ function HomePage({ onNavigate }) {
 }
 
 function NewsPage({ onNavigate }) {
-  // 新闻中心卡片：按时间排序后取最新 4 条
-  const featuredCases = [...ALL_CASES].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
-  const featuredNews = [...ALL_NEWS].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+  const { news, cases } = useContent();
+  const featuredCases = [...(cases || ALL_CASES)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+  const featuredNews = [...(news || ALL_NEWS)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
 
   return (
     <div className="animate-fade-in-up">
@@ -1193,7 +1274,7 @@ function NewsPage({ onNavigate }) {
                {featuredNews.map((item, idx) => (
                   <div key={idx} onClick={() => onNavigate('detail', item)} className={`rounded-2xl overflow-hidden cursor-pointer group ${CARD_THEME_GLOW}`}>
                      <div className="h-48 overflow-hidden relative rounded-t-2xl">
-                        <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={contentImageSrc(item.img)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                      </div>
                      <div className="p-6">
                         <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
@@ -1222,7 +1303,7 @@ function NewsPage({ onNavigate }) {
                {featuredCases.map((item, idx) => (
                   <div key={idx} onClick={() => onNavigate('detail', item)} className={`rounded-2xl overflow-hidden group ${CARD_THEME_GLOW}`}>
                      <div className="h-48 overflow-hidden relative rounded-t-2xl">
-                        <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={contentImageSrc(item.img)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
                      </div>
                      <div className="p-6">
@@ -1241,6 +1322,8 @@ function NewsPage({ onNavigate }) {
 }
 
 function NewsListPage({ onNavigate }) {
+  const { news } = useContent();
+  const list = [...(news || ALL_NEWS)].sort((a, b) => new Date(b.date) - new Date(a.date));
   return (
     <div className="animate-fade-in-up">
       <section className="pt-40 pb-16 px-6 bg-white border-b border-gray-100 z-10 relative">
@@ -1254,15 +1337,16 @@ function NewsListPage({ onNavigate }) {
       </section>
       <section className="py-16 px-6 bg-white min-h-[60vh] relative z-0">
          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...ALL_NEWS].sort((a, b) => new Date(b.date) - new Date(a.date)).map((item, idx) => (
+            {list.map((item, idx) => (
                 <div key={item.id} onClick={() => onNavigate('detail', item)} className={`rounded-2xl overflow-hidden cursor-pointer group ${CARD_THEME_GLOW}`}>
                   <div className="h-56 overflow-hidden relative rounded-t-2xl">
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img src={contentImageSrc(item.img)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-6">
-                    <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
+                    <div className="text-xs text-gray-400 mb-2 flex items-center gap-1 flex-wrap">
                         <Calendar size={12} />
                         {item.date}
+                        {item.category && <span className="ml-2 px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">{item.category}</span>}
                     </div>
                     <h3 className="font-bold text-gray-900 text-lg leading-snug group-hover:text-[#A1D573] transition-colors">
                         {item.title}
@@ -1277,6 +1361,8 @@ function NewsListPage({ onNavigate }) {
 }
 
 function CaseListPage({ onNavigate }) {
+  const { cases } = useContent();
+  const list = [...(cases || ALL_CASES)].sort((a, b) => new Date(b.date) - new Date(a.date));
   return (
     <div className="animate-fade-in-up">
       <section className="pt-40 pb-16 px-6 bg-white border-b border-gray-100 relative z-10">
@@ -1290,13 +1376,14 @@ function CaseListPage({ onNavigate }) {
       </section>
       <section className="py-16 px-6 bg-white min-h-[60vh] relative z-0">
          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...ALL_CASES].sort((a, b) => new Date(b.date) - new Date(a.date)).map((item, idx) => (
+            {list.map((item, idx) => (
                 <div key={item.id} onClick={() => onNavigate('detail', item)} className={`rounded-2xl overflow-hidden cursor-pointer group ${CARD_THEME_GLOW}`}>
                   <div className="h-56 overflow-hidden relative rounded-t-2xl">
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img src={contentImageSrc(item.img)} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
                   </div>
                   <div className="p-6">
+                    {item.category && <span className="text-xs text-gray-500 mb-2 block">{item.category}</span>}
                     <h3 className="font-bold text-xl text-gray-900 mb-3 group-hover:text-[#A1D573] transition-colors">{item.title}</h3>
                     <p className="text-sm text-gray-500 leading-relaxed">
                         {item.desc}
@@ -1341,22 +1428,22 @@ function AboutPage() {
                   那就这么派，是一家极具创造力的互联网快速工程服务提供商。借助超前的“线上线下一体化”商业模式，为企业提供快速、敏捷、专业的工程服务。
                </p>
             </div>
-            <div className="relative h-64 lg:h-96 w-full hidden lg:block">
+           <div className="relative h-64 lg:h-96 w-full hidden lg:block">
                <div className={`absolute top-10 right-10 w-64 h-64 rounded-full ${BG_GRADIENT_LIGHT} blur-3xl`}></div>
                <div className="absolute top-0 right-0 w-full h-full flex items-center justify-center">
                   <div className="grid grid-cols-2 gap-4">
-                     <div className="w-40 h-48 bg-white rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col justify-between transform translate-y-8">
-                        <Users className="text-[#A1D573] w-10 h-10" />
+                     <div className="w-40 h-48 bg-[#3A341C]/50 rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col justify-between transform translate-y-8">
+                        <Users className="text-[#FFEB69] w-10 h-10" />
                         <div>
-                           <div className="text-3xl font-bold text-gray-900">1000+</div>
-                           <div className="text-sm text-gray-500">专业师傅</div>
+                           <div className="text-3xl font-bold text-[#FFEB69]">1000+</div>
+                           <div className="text-sm text-[#FFEB69]">专业师傅</div>
                         </div>
                      </div>
-                     <div className="w-40 h-48 bg-gray-900 rounded-2xl shadow-xl p-6 flex flex-col justify-between">
-                        <MapPin className="text-[#FFEB69] w-10 h-10" />
+                     <div className="w-40 h-48 bg-[#A1D573]/50 rounded-2xl shadow-xl p-6 flex flex-col justify-between">
+                        <MapPin className="text-[#163300] w-10 h-10" />
                         <div>
-                           <div className="text-3xl font-bold text-white">150+</div>
-                           <div className="text-sm text-gray-400">服务城市</div>
+                           <div className="text-3xl font-bold text-[#163300]">150+</div>
+                           <div className="text-sm text-[#163300]">服务城市</div>
                         </div>
                      </div>
                   </div>
@@ -1492,7 +1579,9 @@ function JoinPage() {
              
              <div className={`rounded-[32px] p-8 md:p-10 flex flex-col group ${CARD_THEME_GLOW}`}>
                 <div className="flex items-center gap-3 mb-6">
-                   <h2 className="text-3xl font-bold text-gray-900">加入 <span className={PAI_GRADIENT_TEXT}>Pai</span> 团队</h2>
+                   <h2 className="text-3xl font-bold text-gray-900">
+                      加入 <span className="font-bold" style={{ color: '#FFEB69' }}>派</span> 队
+                   </h2>
                 </div>
                 <p className="text-gray-600 leading-relaxed text-lg flex-1 mb-8">
                    这么派平台为优秀人才提供了更丰富的机会、更广阔的发展空间，欢迎大家与我们一起在多元的业务场景中学习成长，不断为客户创造价值和为充实提高自己而做出的努力！

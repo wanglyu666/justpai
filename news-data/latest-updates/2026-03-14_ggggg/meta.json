@@ -1,0 +1,22 @@
+{
+  "title": "ggggg",
+  "date": "2026-03-14",
+  "author": "gggg",
+  "category": "ggg",
+  "desc": "gggg",
+  "content": [
+    {
+      "type": "text",
+      "value": "hhhh"
+    },
+    {
+      "type": "h3",
+      "value": "ggggg"
+    }
+  ],
+  "published": true,
+  "id": 1,
+  "cover": "cover.png",
+  "img": "/api/uploads/news/2026-03-14_ggggg/cover.png",
+  "folderName": "2026-03-14_ggggg"
+}
