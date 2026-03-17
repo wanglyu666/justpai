@@ -13,6 +13,7 @@ import {
   deleteItem,
   getDataDir,
 } from './storage.js';
+import pool from './db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -25,9 +26,13 @@ const ADMIN_TOKEN = Buffer.from(`${ADMIN_USER}:${ADMIN_PASS}`).toString('base64'
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '50mb' }));
 
+// 上传中间件：限制单个文件和字段大小，避免超大 base64 或图片导致崩溃
 const upload = multer({
   dest: path.join(__dirname, 'tmp'),
-  limits: { fileSize: 20 * 1024 * 1024, fieldSize: 50 * 1024 * 1024 },
+  limits: {
+    fileSize: 20 * 1024 * 1024,      // 单个文件最大 20MB（封面、正文图片）
+    fieldSize: 100 * 1024 * 1024,    // 单个字段（如 meta）最大 100MB
+  },
 });
 
 function auth(req, res, next) {
@@ -67,23 +72,58 @@ app.post('/api/login', (req, res) => {
 });
 
 // ---------- 最新动态 ----------
-// 前台：仅已上架
+// 前台：仅已上架（轻量字段，避免大 JSON 排序占用内存）
 app.get('/api/news', async (req, res) => {
   try {
-    const list = await listItems('news', { publishedOnly: true });
+    const [rows] = await pool.query(
+      `SELECT id, folder_name, title, date, author, category, description, img, published
+       FROM news
+       WHERE published = 1
+       ORDER BY date DESC, id DESC`,
+    );
+
+    const list = rows.map((row) => ({
+      id: row.id,
+      folderName: row.folder_name,
+      title: row.title,
+      date: row.date,
+      author: row.author,
+      category: row.category,
+      desc: row.description,
+      img: row.img,
+      content: [], // 列表页不需要正文，详情页会通过 by-id 再取
+      published: !!row.published,
+    }));
+
     res.json(list);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error('/api/news error', e);
+    res.status(500).json({ error: e.message || '服务器错误' });
   }
 });
 
-// 管理员：全部（含下架）
+// 管理员：全部（含下架）——仅返回列表需要的轻量字段
 app.get('/api/admin/news', auth, async (req, res) => {
   try {
-    const list = await listItems('news', { publishedOnly: false });
+    const [rows] = await pool.query(
+      `SELECT id, folder_name, title, date, author, published
+       FROM news
+       ORDER BY date DESC, id DESC`,
+    );
+
+    const list = rows.map((row) => ({
+      id: row.id,
+      folderName: row.folder_name,
+      title: row.title,
+      date: row.date,
+      author: row.author,
+      published: !!row.published,
+    }));
+
     res.json(list);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error('GET /api/admin/news error', e);
+    res.status(500).json({ error: e.message || '服务器错误' });
   }
 });
 
@@ -140,6 +180,7 @@ app.post('/api/admin/news', auth, upload.single('cover'), async (req, res) => {
       return res.status(400).json({ error: '缺少 meta 数据' });
     }
     const meta = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    console.log('POST /api/admin/news meta:', JSON.stringify(meta));
     const created = await createItem('news', meta, req.file);
     res.json(created);
   } catch (e) {
@@ -154,6 +195,7 @@ app.put('/api/admin/news/:folder', auth, upload.single('cover'), async (req, res
     const raw = req.body?.meta;
     if (raw === undefined) return res.status(400).json({ error: '缺少 meta 数据' });
     const meta = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    console.log('PUT /api/admin/news meta:', JSON.stringify(meta));
     const updated = await updateItem('news', folder, meta, req.file);
     if (!updated) return res.status(404).json({ error: '未找到' });
     res.json(updated);
@@ -204,21 +246,58 @@ app.post('/api/admin/news/:folder/images', auth, upload.single('image'), async (
 });
 
 // ---------- 合作案例 ----------
+// 前台：仅已上架（轻量字段）
 app.get('/api/cases', async (req, res) => {
   try {
-    const list = await listItems('cases', { publishedOnly: true });
+    const [rows] = await pool.query(
+      `SELECT id, folder_name, title, date, author, category, description, img, published
+       FROM cases
+       WHERE published = 1
+       ORDER BY date DESC, id DESC`,
+    );
+
+    const list = rows.map((row) => ({
+      id: row.id,
+      folderName: row.folder_name,
+      title: row.title,
+      date: row.date,
+      author: row.author,
+      category: row.category,
+      desc: row.description,
+      img: row.img,
+      content: [],
+      published: !!row.published,
+    }));
+
     res.json(list);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error('/api/cases error', e);
+    res.status(500).json({ error: e.message || '服务器错误' });
   }
 });
 
+// 管理员：全部（含下架）——仅返回列表需要的轻量字段
 app.get('/api/admin/cases', auth, async (req, res) => {
   try {
-    const list = await listItems('cases', { publishedOnly: false });
+    const [rows] = await pool.query(
+      `SELECT id, folder_name, title, date, author, published
+       FROM cases
+       ORDER BY date DESC, id DESC`,
+    );
+
+    const list = rows.map((row) => ({
+      id: row.id,
+      folderName: row.folder_name,
+      title: row.title,
+      date: row.date,
+      author: row.author,
+      published: !!row.published,
+    }));
+
     res.json(list);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error('GET /api/admin/cases error', e);
+    res.status(500).json({ error: e.message || '服务器错误' });
   }
 });
 
@@ -271,6 +350,7 @@ app.get('/api/admin/cases/:folder', auth, async (req, res) => {
 app.post('/api/admin/cases', auth, upload.single('cover'), async (req, res) => {
   try {
     const meta = typeof req.body.meta === 'string' ? JSON.parse(req.body.meta) : req.body.meta;
+    console.log('POST /api/admin/cases meta:', JSON.stringify(meta));
     const created = await createItem('cases', meta, req.file);
     res.json(created);
   } catch (e) {
@@ -282,6 +362,7 @@ app.put('/api/admin/cases/:folder', auth, upload.single('cover'), async (req, re
   try {
     const folder = decodeURIComponent(req.params.folder);
     const meta = typeof req.body.meta === 'string' ? JSON.parse(req.body.meta) : req.body.meta;
+    console.log('PUT /api/admin/cases meta:', JSON.stringify(meta));
     const updated = await updateItem('cases', folder, meta, req.file);
     if (!updated) return res.status(404).json({ error: '未找到' });
     res.json(updated);
@@ -330,8 +411,14 @@ app.post('/api/admin/cases/:folder/images', auth, upload.single('image'), async 
 });
 
 app.use((err, req, res, next) => {
-  if (err.code === 'LIMIT_FILE_SIZE' || err.code === 'LIMIT_FIELD_SIZE') {
-    return res.status(413).json({ error: '内容过大，请压缩图片或减少正文中的图片' });
+  if (
+    err.code === 'LIMIT_FILE_SIZE' ||
+    err.code === 'LIMIT_FIELD_SIZE' ||
+    err.code === 'LIMIT_FIELD_VALUE'
+  ) {
+    return res
+      .status(413)
+      .json({ error: '内容过大，请压缩图片或减少正文中的图片（不要直接粘贴超大的 base64 图片）' });
   }
   console.error(err);
   res.status(500).json({ error: err.message || '服务器错误' });

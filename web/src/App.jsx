@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import { Menu, X, ArrowRight, Activity, Zap, Layers, BarChart3, ShieldCheck, Globe, Cpu, Download, Users, User, UserPlus, Building2, Smartphone, MapPin, Clock, Wrench, PenTool, Sofa, Droplets, Fan, Leaf, Trash2, FileText, Router, ChevronRight, CheckCircle2, Heart, Handshake, Phone, Mail, HelpCircle, ChevronDown, ChevronLeft, Calendar, Newspaper, ArrowLeft, Target, Share2, Facebook, Twitter, Linkedin, AlertTriangle } from 'lucide-react';
 import STANDARDS_DB from './data/standards';
@@ -6,6 +6,7 @@ import { STANDARD_SLUGS, getCategoryAndKeyBySlug } from './data/standardSlugs';
 import { ALL_CASES, ALL_NEWS } from './data/content';
 import { contentImageSrc } from './data/contentApi';
 import { useContent } from './context/ContentContext';
+import ScrollVelocity from './components/ScrollVelocity';
 import { BRAND_GRADIENT, PAI_GRADIENT_TEXT, BG_GRADIENT_LIGHT, CARD_THEME_GLOW } from './constants/theme';
 
 // --- 其他数据 ---
@@ -60,6 +61,13 @@ const FAQ_DATA = [
   "下单过程中遇到问题怎么办？",
   "推荐码有什么用？"
 ];
+
+function formatDate(value) {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return value;
+  return d.toISOString().slice(0, 10);
+}
 
 // --- 主组件 ---
 
@@ -299,7 +307,7 @@ function DetailPage({ data: dataProp, onNavigate }) {
           <div className="flex items-center gap-6 text-sm text-gray-500 mb-8 pb-8 border-b border-gray-100 flex-wrap">
             <div className="flex items-center gap-2">
               <Calendar size={16} />
-              {data.date || 'Unknown Date'}
+              {formatDate(data.date) || 'Unknown Date'}
             </div>
             <div className="flex items-center gap-2">
               <User size={16} />
@@ -1169,10 +1177,13 @@ function HomePage({ onNavigate }) {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
                      </div>
                      <div className="p-6">
-                        <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-1 group-hover:text-[#A1D573] transition-colors">{item.title}</h3>
-                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 mb-4">
-                           {item.desc}
-                        </p>
+                        <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
+                           <Calendar size={12} />
+                           {formatDate(item.date)}
+                        </div>
+                        <h3 className="font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#A1D573] transition-colors">
+                           {item.title}
+                        </h3>
                      </div>
                   </div>
                ))}
@@ -1195,6 +1206,22 @@ function HomePage({ onNavigate }) {
                </button>
             </div>
          </div>
+      </section>
+      
+      {/* 滚动字体效果：两行 justpai，上左滚下右滚，横跨整个视口宽度
+          手动修改位置（本段）：
+          - 字体内容：改 texts 数组，两项对应上下两行，每项会重复滚动显示
+          - 字体大小：改 scrollerClassName，如 text-lg md:text-2xl（更小）或 text-2xl md:text-4xl（更大）
+          - 滚动速度：改 velocity，数值越大越快，如 140、180、220 */}
+      <section className="py-16 px-0 bg-white border-t border-gray-50">
+        <ScrollVelocity
+          texts={['Justpai ', '这么派 ']}
+          velocity={100}
+          numCopies={20}  // 副本数量越多，整条跑马灯越长，左右更不容易留空
+          scrollerClassName="text-lg md:text-4xl font-bold tracking-[-0.02em] px-6"
+          scrollerStyle={{ color: '#163300' }}
+          parallaxClassName="py-4 w-full"
+        />
       </section>
 
       <section className="py-24 px-6 bg-white border-t border-gray-50">
@@ -1222,7 +1249,7 @@ function HomePage({ onNavigate }) {
                      <div className="p-6">
                         <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
                            <Calendar size={12} />
-                           {item.date}
+                           {formatDate(item.date)}
                         </div>
                         <h3 className="font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#A1D573] transition-colors">
                            {item.title}
@@ -1279,7 +1306,7 @@ function NewsPage({ onNavigate }) {
                      <div className="p-6">
                         <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
                            <Calendar size={12} />
-                           {item.date}
+                           {formatDate(item.date)}
                         </div>
                         <h3 className="font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#A1D573] transition-colors">
                            {item.title}
@@ -1307,10 +1334,13 @@ function NewsPage({ onNavigate }) {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
                      </div>
                      <div className="p-6">
-                        <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-1 group-hover:text-[#A1D573] transition-colors">{item.title}</h3>
-                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 mb-4">
-                           {item.desc}
-                        </p>
+                        <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
+                           <Calendar size={12} />
+                           {formatDate(item.date)}
+                        </div>
+                        <h3 className="font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#A1D573] transition-colors">
+                           {item.title}
+                        </h3>
                      </div>
                   </div>
                ))}
@@ -1345,7 +1375,7 @@ function NewsListPage({ onNavigate }) {
                   <div className="p-6">
                     <div className="text-xs text-gray-400 mb-2 flex items-center gap-1 flex-wrap">
                         <Calendar size={12} />
-                        {item.date}
+                        {formatDate(item.date)}
                         {item.category && <span className="ml-2 px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">{item.category}</span>}
                     </div>
                     <h3 className="font-bold text-gray-900 text-lg leading-snug group-hover:text-[#A1D573] transition-colors">

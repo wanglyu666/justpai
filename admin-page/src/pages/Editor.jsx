@@ -141,13 +141,25 @@ export default function Editor() {
 
   async function save(publish) {
     setSaving(true);
+    // 规范化正文：过滤空块，并去掉超大的 base64 图片，避免触发 Multer 的字段长度限制
+    const cleanedContent = content
+      .filter((b) => b.type && (b.value !== undefined && b.value !== ''))
+      .map((b) => {
+        if (b.type === 'img' && typeof b.value === 'string' && b.value.startsWith('data:')) {
+          // data: 前缀的图片是本地 base64，大字段容易导致上传失败；这里先丢弃，提示用户改用“上传本地图片”
+          return { ...b, value: '' };
+        }
+        return b;
+      })
+      .filter((b) => b.value !== '');
+
     const meta = {
       title,
       date: date || new Date().toISOString().slice(0, 10),
       author,
       category,
       desc,
-      content: content.filter((b) => b.type && (b.value !== undefined && b.value !== '')),
+      content: cleanedContent,
       published: publish,
     };
     try {
