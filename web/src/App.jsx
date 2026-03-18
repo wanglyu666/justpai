@@ -2,6 +2,7 @@
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import { Menu, X, ArrowRight, Activity, Zap, Layers, BarChart3, ShieldCheck, Globe, Cpu, Download, Users, User, UserPlus, Building2, Smartphone, MapPin, Clock, Wrench, PenTool, Sofa, Droplets, Fan, Leaf, Trash2, FileText, Router, ChevronRight, CheckCircle2, Heart, Handshake, Phone, Mail, HelpCircle, ChevronDown, ChevronLeft, Calendar, Newspaper, ArrowLeft, Target, Share2, Facebook, Twitter, Linkedin, AlertTriangle } from 'lucide-react';
 import STANDARDS_DB from './data/standards';
+import STANDARD_CONTENT_EN from './data/standards.en';
 import { STANDARD_SLUGS, getCategoryAndKeyBySlug } from './data/standardSlugs';
 import { ALL_CASES, ALL_NEWS } from './data/content';
 import { contentImageSrc } from './data/contentApi';
@@ -29,38 +30,38 @@ const CLIENTS = [
 ];
 
 const HISTORY = [
-  { year: "2020", title: "创立元年", desc: "公司正式成立，确立“快速工程”服务理念。同年携手西门子，提供全国改选维修年度框架协议服务，奠定行业基础。" },
-  { year: "2021", title: "全国扩张", desc: "北京、上海、深圳分公司相继成立，业务覆盖华北、华东、华南。全国建立50+城市服务商网络，拥有300+专业认证师傅。携手字节跳动，服务互联网巨头。" },
-  { year: "2022", title: "携手头部", desc: "开辟场所地网建设新业务。携手阿里巴巴，为其全国三四线城市办公室提供地网建设项目服务。与霍尼韦尔达成合作，深化技术壁垒。" },
-  { year: "2023", title: "战略升级", desc: "品牌全面升级为“那就这么派”。建立全国四大核心业务区，拓展至150+城市服务商，1000+师傅。研发自有互联网服务平台，探索O2O业务模式。" },
-  { year: "2024", title: "平台上线", desc: "“这么派/JustPai”平台及APP正式上线，开启O2O服务新纪元。平台上线500+标准化快速工程及运维产品，整合200+平台城市服务商，构建全域服务生态。" }
+  { year: "2020", title: { zh: "创立元年", en: "Foundation Year" }, desc: { zh: "公司正式成立，确立“快速工程”服务理念。同年携手西门子，提供全国改选维修年度框架协议服务，奠定行业基础。", en: "The company was founded and established the concept of rapid engineering services. In the same year, we partnered with Siemens on nationwide annual maintenance framework services, laying a strong foundation." } },
+  { year: "2021", title: { zh: "全国扩张", en: "Nationwide Expansion" }, desc: { zh: "北京、上海、深圳分公司相继成立，业务覆盖华北、华东、华南。全国建立50+城市服务商网络，拥有300+专业认证师傅。携手字节跳动，服务互联网巨头。", en: "Branches were established in Beijing, Shanghai, and Shenzhen, covering North, East, and South China. A service network across 50+ cities with 300+ certified engineers was built. We also partnered with ByteDance." } },
+  { year: "2022", title: { zh: "携手头部", en: "Partnering with Industry Leaders" }, desc: { zh: "开辟场所地网建设新业务。携手阿里巴巴，为其全国三四线城市办公室提供地网建设项目服务。与霍尼韦尔达成合作，深化技术壁垒。", en: "Launched new site network infrastructure services. Worked with Alibaba on office network projects in lower-tier cities nationwide. Partnered with Honeywell to strengthen technical capabilities." } },
+  { year: "2023", title: { zh: "战略升级", en: "Strategic Upgrade" }, desc: { zh: "品牌全面升级为“那就这么派”。建立全国四大核心业务区，拓展至150+城市服务商，1000+师傅。研发自有互联网服务平台，探索O2O业务模式。", en: "The brand was fully upgraded to JustPai. Four nationwide core business regions were established, expanding to 150+ city service providers and 1,000+ engineers. We developed our own internet service platform to explore O2O operations." } },
+  { year: "2024", title: { zh: "平台上线", en: "Platform Launch" }, desc: { zh: "“这么派/JustPai”平台及APP正式上线，开启O2O服务新纪元。平台上线500+标准化快速工程及运维产品，整合200+平台城市服务商，构建全域服务生态。", en: "The JustPai platform and app officially launched, opening a new era of O2O services. The platform introduced 500+ standardized rapid engineering and maintenance products, integrating 200+ city service providers." } }
 ];
 
 const SERVICE_ICONS = [
-  { name: "空间设计", icon: PenTool },
-  { name: "硬装改造", icon: Wrench },
-  { name: "软装陈列", icon: Sofa },
-  { name: "水电工程", icon: Droplets },
-  { name: "暖通空调", icon: Fan },
-  { name: "智能网络", icon: Router }, 
-  { name: "设施运维", icon: Activity },
-  { name: "办公家具", icon: Layers },
-  { name: "绿化租赁", icon: Leaf },
-  { name: "深度保洁", icon: Trash2 },
-  { name: "年框服务", icon: FileText },
+  { name: { zh: "空间设计", en: "Space Design" }, icon: PenTool },
+  { name: { zh: "硬装改造", en: "Hard Renovation" }, icon: Wrench },
+  { name: { zh: "软装陈列", en: "Soft Decoration" }, icon: Sofa },
+  { name: { zh: "水电工程", en: "MEP Works" }, icon: Droplets },
+  { name: { zh: "暖通空调", en: "HVAC" }, icon: Fan },
+  { name: { zh: "智能网络", en: "Smart Network" }, icon: Router }, 
+  { name: { zh: "设施运维", en: "Facility O&M" }, icon: Activity },
+  { name: { zh: "办公家具", en: "Office Furniture" }, icon: Layers },
+  { name: { zh: "绿化租赁", en: "Green Leasing" }, icon: Leaf },
+  { name: { zh: "深度保洁", en: "Deep Cleaning" }, icon: Trash2 },
+  { name: { zh: "年框服务", en: "Annual Framework" }, icon: FileText },
 ];
 
 const FAQ_DATA = [
-  { question: "我们能提供什么服务？", answer: "平台提供设施运维、空间改造、机电改造、弱电改造、场所智能改造、地网建设、商办空间设计及定制服务等8大工程服务类别。商店包含平台提供的300余种单项运维和工程产品，通常由1个或多个产品组合形成1项服务，客户可自行选择，也可由平台客服协助搭配。" },
-  { question: "购物车中为什么有普通产品和定制产品，有什么区别？", answer: "普通产品指品牌、型号、计量价格及服务内容明确的标准产品；定制产品则由平台根据您的需求，对形状、颜色、规格、材料等进行个性化加工。定制产品因无法二次销售，不支持退换货，但同样享有1年保修服务。" },
-  { question: "我们的服务范围？", answer: "我们的服务范围目前涵盖以下城市：哈尔滨、长春、吉林、沈阳、大连、苏州、南京、无锡、常州、泰州、南通、常熟、张家港、太仓、昆山、吴江、杭州、宁波、绍兴、温州、嘉兴、金华、台州、厦门、福州、广州、深圳、东莞、佛山、珠海、中山、江门、南宁、海口、三亚、北京、天津、石家庄、唐山、太原、上海、郑州、青岛、济南、成都、贵阳、昆明、合肥、芜湖、武汉、南昌、长沙、重庆、西安、咸阳。如果您有其他城市的服务需求，欢迎联系客服，我们将尽力为您安排。" },
-  { question: "商店的价格包括什么？", answer: "商店中的价格中包含产品采购、运输与仓储、安装与调试、保修与保险、成品保护与保洁等直接和间接成本，保证全国一致的客户体验。" },
-  { question: "商店中默认的起订量为什么不是1，需求量低于起订量怎么下单？", answer: "起订量用于合理分摊运输、仓储、安装、调试、保修、保险及现场保护保洁等成本。若未达到起订量，欢迎致电客服热线 4006-681997，我们将根据您的实际需求协助组合选购两种及以上产品并完成下单。" },
-  { question: "这么派平台有几种注册方式？有什么区别？", answer: "这么派平台提供快速注册与企业认证两种客户注册方式。快速注册仅需填写用户名、联系电话、电子邮箱等基本信息，即可浏览平台；企业认证需提交营业执照、银行账户、授权书等资料，认证后可享受平台浏览、在线咨询、产品下单、线下签约及数据报表等线上线下一体化服务。" },
-  { question: "我是新手，不会下单，怎么办？", answer: "如您有下单需求，欢迎致电客服热线 4006-681997，我们将根据您的实际需求为您提供专业咨询与下单指导。您也可在平台填写咨询单，待我们与您确认订单信息后，即可协助您完成下单。" },
-  { question: "想在商店中订购需要企业注册吗？", answer: "目前平台部分功能需要客户先进行企业认证才可开放，如果您想了解“派产品”的价格和在线订购产品，需要先进行企业认证，平台审核通过后即可使用相关功能。" },
-  { question: "平台对订单服务执行过程中是如何管理的？", answer: "平台对订单服务执行全过程实施管理，从下单（非平台订单以立项为起点）至质保期结束。管理内容包括服务立项（设定进度、材料、质量、EHS等目标）及全过程标准化执行监管，确保现场服务规范有序。用户可通过平台或APP在线查看过程资料、参与节点验收，并进行报修、意见反馈与评价等操作。" },
-  { question: "你们是中介平台吗？", answer: "我们不是中介平台。我们是一家专注于工程领域的全链条服务自营平台，致力于为客户提供从项目建设到运维的一站式服务。与以解决用工需求、管理人力资源为核心的服务平台不同，我们始终围绕工程业务全流程，自主把控服务标准与交付质量。" },
+  { question: { zh: "我们能提供什么服务？", en: "What services can we provide?" }, answer: { zh: "平台提供设施运维、空间改造、机电改造、弱电改造、场所智能改造、地网建设、商办空间设计及定制服务等8大工程服务类别。商店包含平台提供的300余种单项运维和工程产品，通常由1个或多个产品组合形成1项服务，客户可自行选择，也可由平台客服协助搭配。", en: "We provide 8 major engineering service categories, including facility O&M, space renovation, MEP works, low-voltage systems, smart site upgrades, network infrastructure, commercial space design, and customization. The store offers 300+ standardized products, which can be combined into service packages by customers or with support from our service team." } },
+  { question: { zh: "购物车中为什么有普通产品和定制产品，有什么区别？", en: "Why are there standard and customized products in the cart?" }, answer: { zh: "普通产品指品牌、型号、计量价格及服务内容明确的标准产品；定制产品则由平台根据您的需求，对形状、颜色、规格、材料等进行个性化加工。定制产品因无法二次销售，不支持退换货，但同样享有1年保修服务。", en: "Standard products have fixed brand/model/specification and clear service scope. Customized products are tailored to your requirements such as shape, color, size, and materials. As customized items cannot be resold, they are non-returnable, but still include a 1-year warranty." } },
+  { question: { zh: "我们的服务范围？", en: "What is your service coverage?" }, answer: { zh: "我们的服务范围目前涵盖以下城市：哈尔滨、长春、吉林、沈阳、大连、苏州、南京、无锡、常州、泰州、南通、常熟、张家港、太仓、昆山、吴江、杭州、宁波、绍兴、温州、嘉兴、金华、台州、厦门、福州、广州、深圳、东莞、佛山、珠海、中山、江门、南宁、海口、三亚、北京、天津、石家庄、唐山、太原、上海、郑州、青岛、济南、成都、贵阳、昆明、合肥、芜湖、武汉、南昌、长沙、重庆、西安、咸阳。如果您有其他城市的服务需求，欢迎联系客服，我们将尽力为您安排。", en: "Our services currently cover major cities across China. If your city is not listed, please contact us and we will do our best to arrange support based on your project needs." } },
+  { question: { zh: "商店的价格包括什么？", en: "What is included in store pricing?" }, answer: { zh: "商店中的价格中包含产品采购、运输与仓储、安装与调试、保修与保险、成品保护与保洁等直接和间接成本，保证全国一致的客户体验。", en: "Store pricing includes direct and indirect costs such as procurement, logistics and warehousing, installation and commissioning, warranty and insurance, finished-product protection, and cleanup, ensuring consistent nationwide service quality." } },
+  { question: { zh: "商店中默认的起订量为什么不是1，需求量低于起订量怎么下单？", en: "Why is the MOQ not 1, and what if my demand is below MOQ?" }, answer: { zh: "起订量用于合理分摊运输、仓储、安装、调试、保修、保险及现场保护保洁等成本。若未达到起订量，欢迎致电客服热线 4006-681997，我们将根据您的实际需求协助组合选购两种及以上产品并完成下单。", en: "MOQ helps distribute costs such as logistics, installation, commissioning, warranty, insurance, and on-site protection/cleanup. If your demand is below MOQ, call 4006-681997 and we will help combine products and complete your order." } },
+  { question: { zh: "这么派平台有几种注册方式？有什么区别？", en: "How many registration methods are available on JustPai?" }, answer: { zh: "这么派平台提供快速注册与企业认证两种客户注册方式。快速注册仅需填写用户名、联系电话、电子邮箱等基本信息，即可浏览平台；企业认证需提交营业执照、银行账户、授权书等资料，认证后可享受平台浏览、在线咨询、产品下单、线下签约及数据报表等线上线下一体化服务。", en: "JustPai supports Quick Registration and Enterprise Verification. Quick Registration requires only basic contact information for browsing. Enterprise Verification requires legal documents and unlocks full capabilities including consultation, ordering, contracting, and reports." } },
+  { question: { zh: "我是新手，不会下单，怎么办？", en: "I am new and don't know how to place orders. What should I do?" }, answer: { zh: "如您有下单需求，欢迎致电客服热线 4006-681997，我们将根据您的实际需求为您提供专业咨询与下单指导。您也可在平台填写咨询单，待我们与您确认订单信息后，即可协助您完成下单。", en: "Please call our support hotline at 4006-681997 for professional consultation and step-by-step order assistance. You can also submit a consultation form on the platform and we will help complete the order with you." } },
+  { question: { zh: "想在商店中订购需要企业注册吗？", en: "Is enterprise registration required to place orders?" }, answer: { zh: "目前平台部分功能需要客户先进行企业认证才可开放，如果您想了解“派产品”的价格和在线订购产品，需要先进行企业认证，平台审核通过后即可使用相关功能。", en: "Some platform capabilities require enterprise verification first. To view full pricing and place online orders, please complete enterprise verification. Features will be available after approval." } },
+  { question: { zh: "平台对订单服务执行过程中是如何管理的？", en: "How does the platform manage service execution?" }, answer: { zh: "平台对订单服务执行全过程实施管理，从下单（非平台订单以立项为起点）至质保期结束。管理内容包括服务立项（设定进度、材料、质量、EHS等目标）及全过程标准化执行监管，确保现场服务规范有序。用户可通过平台或APP在线查看过程资料、参与节点验收，并进行报修、意见反馈与评价等操作。", en: "We manage the full lifecycle from order placement (or project initiation) to warranty completion, including schedule/material/quality/EHS targets and standardized execution control. Users can track progress, join milestone acceptance, report issues, and leave feedback via web or app." } },
+  { question: { zh: "你们是中介平台吗？", en: "Are you an intermediary platform?" }, answer: { zh: "我们不是中介平台。我们是一家专注于工程领域的全链条服务自营平台，致力于为客户提供从项目建设到运维的一站式服务。与以解决用工需求、管理人力资源为核心的服务平台不同，我们始终围绕工程业务全流程，自主把控服务标准与交付质量。", en: "No. We are not an intermediary platform. We are a self-operated full-chain engineering service platform providing one-stop delivery from project construction to operations and maintenance, with direct quality and execution control." } },
 ];
 
 function formatDate(value) {
@@ -72,37 +73,95 @@ function formatDate(value) {
 
 // --- 主组件 ---
 
-function buildNavigate(navigate, setMobileMenuOpen, news, cases) {
+function stripLangPrefix(pathname) {
+  if (pathname === '/EN') return '/';
+  if (pathname.startsWith('/EN/')) return pathname.slice(3);
+  return pathname;
+}
+
+function withLangPrefix(path, isEn) {
+  if (!isEn) return path;
+  return path === '/' ? '/EN' : `/EN${path}`;
+}
+
+function buildNavigate(navigate, setMobileMenuOpen, news, cases, isEn) {
   return (page, data = null) => {
     setMobileMenuOpen(false);
     if (page === 'detail' && data) {
       const isNews = (news || ALL_NEWS).some((n) => n.id === data.id);
-      navigate(isNews ? `/news/${data.id}` : `/cases/${data.id}`);
+      navigate(withLangPrefix(isNews ? `/news/${data.id}` : `/cases/${data.id}`, isEn));
     } else {
       const pathMap = { home: '/', news: '/news', 'news-list': '/news-list', 'cases-list': '/cases-list', standards: '/standards', about: '/about', join: '/join', help: '/help' };
-      navigate(pathMap[page] || '/');
+      navigate(withLangPrefix(pathMap[page] || '/', isEn));
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 }
 
 function isNewsCenter(pathname) {
-  return pathname === '/news' || pathname === '/news-list' || pathname === '/cases-list' || pathname.startsWith('/news/') || pathname.startsWith('/cases/');
+  const normalized = stripLangPrefix(pathname);
+  return normalized === '/news' || normalized === '/news-list' || normalized === '/cases-list' || normalized.startsWith('/news/') || normalized.startsWith('/cases/');
+}
+
+const STANDARD_CATEGORY_LABELS_EN = {
+  '环境管控': 'Environmental Control',
+  '安全管控': 'Safety Control',
+  '健康管控': 'Health Control',
+  '成品管控': 'Finished Product Protection',
+  '卫生保洁': 'Hygiene & Cleaning',
+  '风险管控': 'Risk Control',
+};
+
+function slugToTitle(slug) {
+  if (!slug) return '';
+  return slug
+    .split('-')
+    .map((part) => (part ? part.charAt(0).toUpperCase() + part.slice(1) : part))
+    .join(' ');
+}
+
+function standardItemLabel(itemKey, isEn) {
+  if (!isEn) return itemKey;
+  return slugToTitle(STANDARD_SLUGS[itemKey]) || itemKey;
+}
+
+function standardCategoryLabel(name, isEn) {
+  if (!isEn) return name;
+  return STANDARD_CATEGORY_LABELS_EN[name] || name;
+}
+
+function getLocalizedStandard(itemKey, isEn) {
+  const base = STANDARDS_DB[itemKey];
+  if (!base) return null;
+  if (!isEn) return base;
+  const en = STANDARD_CONTENT_EN[itemKey];
+  if (!en) return base;
+  return { ...base, ...en };
 }
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
+  const isEn = pathname === '/EN' || pathname.startsWith('/EN/');
+  const t = (zh, en) => (isEn ? en : zh);
   const { news, cases } = useContent();
-  const navigateTo = buildNavigate(navigate, setMobileMenuOpen, news, cases);
+  const navigateTo = buildNavigate(navigate, setMobileMenuOpen, news, cases, isEn);
+
+  function switchLanguage(toEnglish) {
+    const basePath = stripLangPrefix(pathname);
+    const target = toEnglish ? withLangPrefix(basePath, true) : basePath;
+    setLangMenuOpen(false);
+    navigate(target);
+  }
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-[#A1D573] selection:text-white overflow-x-hidden relative">
       
       {/* 顶部悬浮毛玻璃导航栏 (在 standards 页面隐藏) */}
-      {!pathname.startsWith('/standards') && (
+      {!stripLangPrefix(pathname).startsWith('/standards') && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-auto max-w-[95%] pointer-events-none">
           <nav className="pointer-events-auto bg-gray-200/50 backdrop-blur-md border border-white/60 rounded-full px-8 py-3.5 flex items-center justify-center gap-10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-300">
             
@@ -111,11 +170,27 @@ export default function App() {
             </div>
 
             <div className="hidden md:flex items-center gap-12 text-sm font-medium shrink-0">
-              <button onClick={() => navigateTo('home')} className={`whitespace-nowrap transition-colors ${pathname === '/' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>首页</button>
-              <button onClick={() => navigateTo('news')} className={`whitespace-nowrap transition-colors ${isNewsCenter(pathname) ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>新闻中心</button>
-              <button onClick={() => navigateTo('about')} className={`whitespace-nowrap transition-colors ${pathname === '/about' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>关于我们</button>
-              <button onClick={() => navigateTo('join')} className={`whitespace-nowrap transition-colors ${pathname === '/join' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>加入我们</button>
-              <button onClick={() => navigateTo('help')} className={`whitespace-nowrap transition-colors flex items-center gap-1 ${pathname === '/help' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>帮助中心</button>
+              <button onClick={() => navigateTo('home')} className={`whitespace-nowrap transition-colors ${stripLangPrefix(pathname) === '/' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>{t('首页', 'Home')}</button>
+              <button onClick={() => navigateTo('news')} className={`whitespace-nowrap transition-colors ${isNewsCenter(pathname) ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>{t('新闻中心', 'News')}</button>
+              <button onClick={() => navigateTo('about')} className={`whitespace-nowrap transition-colors ${stripLangPrefix(pathname) === '/about' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>{t('关于我们', 'About')}</button>
+              <button onClick={() => navigateTo('join')} className={`whitespace-nowrap transition-colors ${stripLangPrefix(pathname) === '/join' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>{t('加入我们', 'Join')}</button>
+              <button onClick={() => navigateTo('help')} className={`whitespace-nowrap transition-colors flex items-center gap-1 ${stripLangPrefix(pathname) === '/help' ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}`}>{t('帮助中心', 'Help')}</button>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setLangMenuOpen((v) => !v)}
+                  className="flex items-center justify-center rounded-full p-1.5 hover:bg-white/60 transition-colors"
+                  title={t('语言切换', 'Language')}
+                >
+                  <Globe size={18} color="#163300" />
+                </button>
+                {langMenuOpen && (
+                  <div className="absolute right-0 mt-3 w-32 rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+                    <button type="button" onClick={() => switchLanguage(true)} className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">English</button>
+                    <button type="button" onClick={() => switchLanguage(false)} className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">简体中文</button>
+                  </div>
+                )}
+              </div>
             </div>
 
             <button className="md:hidden text-gray-900 shrink-0" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -125,60 +200,75 @@ export default function App() {
         </div>
       )}
 
-      {mobileMenuOpen && !pathname.startsWith('/standards') && (
+      {mobileMenuOpen && !stripLangPrefix(pathname).startsWith('/standards') && (
         <div className="md:hidden fixed top-24 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-gray-100/90 backdrop-blur-xl border border-white/60 rounded-3xl p-6 flex flex-col gap-6 shadow-2xl z-[90]">
-          <button onClick={() => navigateTo('home')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">首页</button>
-          <button onClick={() => navigateTo('news')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">新闻中心</button>
-          <button onClick={() => navigateTo('about')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">关于我们</button>
-          <button onClick={() => navigateTo('join')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">加入我们</button>
-          <button onClick={() => navigateTo('help')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">帮助中心</button>
+          <button onClick={() => navigateTo('home')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">{t('首页', 'Home')}</button>
+          <button onClick={() => navigateTo('news')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">{t('新闻中心', 'News')}</button>
+          <button onClick={() => navigateTo('about')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">{t('关于我们', 'About')}</button>
+          <button onClick={() => navigateTo('join')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">{t('加入我们', 'Join')}</button>
+          <button onClick={() => navigateTo('help')} className="text-lg text-left text-gray-600 hover:text-gray-900 font-medium">{t('帮助中心', 'Help')}</button>
+          <div className="border-t border-gray-200 pt-4">
+            <button onClick={() => switchLanguage(false)} className="text-base text-left text-gray-600 hover:text-gray-900 font-medium w-full">简体中文</button>
+            <button onClick={() => switchLanguage(true)} className="text-base text-left text-gray-600 hover:text-gray-900 font-medium w-full mt-2">English</button>
+          </div>
         </div>
       )}
 
       {/* 页面内容路由 (URL 可分享：/news/1、/cases/2 等) */}
       <main>
         <Routes>
-          <Route path="/" element={<HomePage onNavigate={navigateTo} />} />
-          <Route path="/news" element={<NewsPage onNavigate={navigateTo} />} />
-          <Route path="/news-list" element={<NewsListPage onNavigate={navigateTo} />} />
-          <Route path="/cases-list" element={<CaseListPage onNavigate={navigateTo} />} />
-          <Route path="/news/:id" element={<DetailPage onNavigate={navigateTo} />} />
-          <Route path="/cases/:id" element={<DetailPage onNavigate={navigateTo} />} />
-          <Route path="/standards" element={<StandardsPage onNavigate={navigateTo} />} />
-          <Route path="/standards/:slug" element={<StandardsPage onNavigate={navigateTo} />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/join" element={<JoinPage />} />
-          <Route path="/help" element={<HelpPage />} />
+          <Route path="/" element={<HomePage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/news" element={<NewsPage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/news-list" element={<NewsListPage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/cases-list" element={<CaseListPage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/news/:id" element={<DetailPage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/cases/:id" element={<DetailPage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/standards" element={<StandardsPage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/standards/:slug" element={<StandardsPage onNavigate={navigateTo} isEn={isEn} />} />
+          <Route path="/about" element={<AboutPage isEn={isEn} />} />
+          <Route path="/join" element={<JoinPage isEn={isEn} />} />
+          <Route path="/help" element={<HelpPage isEn={isEn} />} />
+          <Route path="/EN" element={<HomePage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/news" element={<NewsPage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/news-list" element={<NewsListPage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/cases-list" element={<CaseListPage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/news/:id" element={<DetailPage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/cases/:id" element={<DetailPage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/standards" element={<StandardsPage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/standards/:slug" element={<StandardsPage onNavigate={navigateTo} isEn />} />
+          <Route path="/EN/about" element={<AboutPage isEn />} />
+          <Route path="/EN/join" element={<JoinPage isEn />} />
+          <Route path="/EN/help" element={<HelpPage isEn />} />
         </Routes>
       </main>
 
       {/* 公共页脚 (在 standards 页面隐藏) */}
-      {!pathname.startsWith('/standards') && (
+      {!stripLangPrefix(pathname).startsWith('/standards') && (
         <footer className="bg-gray-900 border-t border-gray-800 pt-20 pb-10 px-6 text-white relative z-20">
            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
               <div className="col-span-1 md:col-span-1">
                  <div className="flex items-center gap-2 mb-6">
                     <img src="/justpai-logo-darkgreen-2.png" alt="这么派" className="w-8 h-8 object-contain" />
-                    <span className="text-xl font-bold">这么派</span>
+                    <span className="text-xl font-bold">{t('这么派', 'JustPai')}</span>
                  </div>
                  <p className="text-gray-400 text-sm">
-                    专注企业快速工程服务<br/>
+                    {t('专注企业快速工程服务', 'Focused on enterprise rapid engineering services')}<br/>
                     Just better, Just pai.
                  </p>
               </div>
               
               <div>
-                 <h4 className="font-bold text-white mb-6">公司</h4>
+                 <h4 className="font-bold text-white mb-6">{t('公司', 'Company')}</h4>
                  <ul className="space-y-4 text-gray-400 text-sm">
-                    <li><button onClick={() => navigateTo('about')} className="hover:text-[#A1D573] transition-colors">关于我们</button></li>
-                    <li><button onClick={() => navigateTo('join')} className="hover:text-[#A1D573] transition-colors">加入我们</button></li>
-                    <li><button onClick={() => navigateTo('news')} className="hover:text-[#A1D573] transition-colors">新闻中心</button></li>
-                    <li><button onClick={() => navigateTo('help')} className="hover:text-[#A1D573] transition-colors">帮助中心</button></li>
+                    <li><button onClick={() => navigateTo('about')} className="hover:text-[#A1D573] transition-colors">{t('关于我们', 'About')}</button></li>
+                    <li><button onClick={() => navigateTo('join')} className="hover:text-[#A1D573] transition-colors">{t('加入我们', 'Join')}</button></li>
+                    <li><button onClick={() => navigateTo('news')} className="hover:text-[#A1D573] transition-colors">{t('新闻中心', 'News')}</button></li>
+                    <li><button onClick={() => navigateTo('help')} className="hover:text-[#A1D573] transition-colors">{t('帮助中心', 'Help')}</button></li>
                  </ul>
               </div>
 
               <div>
-                 <h4 className="font-bold text-white mb-6">联系</h4>
+                 <h4 className="font-bold text-white mb-6">{t('联系', 'Contact')}</h4>
                  <ul className="space-y-4 text-gray-400 text-sm">
                     <li>北京市：朝阳区住邦2000商务中心4号楼</li>
                     <li>上海市：普陀区长寿路587号沙田大厦25层</li>
@@ -265,14 +355,16 @@ export default function App() {
 }
 
 // ================= 通用内容详情页 (DetailPage，支持 URL /news/:id、/cases/:id 分享) =================
-function DetailPage({ data: dataProp, onNavigate }) {
+function DetailPage({ data: dataProp, onNavigate, isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
   const { id: idParam } = useParams();
   const { pathname } = useLocation();
   const { news, cases } = useContent();
   const dataFromUrl = (() => {
     if (dataProp) return dataProp;
     if (!idParam) return null;
-    const isNews = pathname.startsWith('/news');
+    const normalizedPath = stripLangPrefix(pathname);
+    const isNews = normalizedPath.startsWith('/news');
     const list = isNews ? news : cases;
     const item = list.find((i) => String(i.id) === String(idParam));
     return item || null;
@@ -283,7 +375,9 @@ function DetailPage({ data: dataProp, onNavigate }) {
   }, [dataFromUrl]);
 
   if (!dataFromUrl) {
-    return <Navigate to={pathname.startsWith('/news') ? '/news' : '/cases-list'} replace />;
+    const normalizedPath = stripLangPrefix(pathname);
+    const fallback = normalizedPath.startsWith('/news') ? '/news' : '/cases-list';
+    return <Navigate to={withLangPrefix(fallback, isEn)} replace />;
   }
   const data = dataFromUrl;
 
@@ -296,9 +390,9 @@ function DetailPage({ data: dataProp, onNavigate }) {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
         <div className="lg:col-span-8">
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <button onClick={() => onNavigate('home')} className="hover:text-black">首页</button>
+            <button onClick={() => onNavigate('home')} className="hover:text-black">{t('首页', 'Home')}</button>
             <ChevronRight size={14} />
-            <button onClick={() => onNavigate('news')} className="hover:text-black">新闻中心</button>
+            <button onClick={() => onNavigate('news')} className="hover:text-black">{t('新闻中心', 'News')}</button>
             <ChevronRight size={14} />
             <span className="text-gray-900 font-medium truncate max-w-[200px]">{data.title}</span>
           </div>
@@ -396,7 +490,22 @@ function DetailPage({ data: dataProp, onNavigate }) {
 }
 
 
-function StandardsPage({ onNavigate }) {
+function StandardsPage({ onNavigate, isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
+  const riskValueLabel = (v) => {
+    if (!isEn) return v;
+    if (v === '高风险') return 'High Risk';
+    if (v === '中风险') return 'Medium Risk';
+    if (v === '低风险') return 'Low Risk';
+    return v;
+  };
+  const riskFrequencyLabel = (v) => {
+    if (!isEn) return v;
+    if (v === '高') return 'High';
+    if (v === '中') return 'Medium';
+    if (v === '低') return 'Low';
+    return v;
+  };
   const { slug } = useParams();
   const navigate = useNavigate();
 
@@ -406,7 +515,14 @@ function StandardsPage({ onNavigate }) {
 
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubItem, setActiveSubItem] = useState(null);
-  const [activeStandardIntro, setActiveStandardIntro] = useState('质量标准化');
+  const [activeStandardIntro, setActiveStandardIntro] = useState('quality');
+  const standardIntroTabs = [
+    { key: 'quality', zh: '质量标准化', en: 'Quality Standardization' },
+    { key: 'service', zh: '服务标准化', en: 'Service Standardization' },
+    { key: 'process', zh: '流程标准化', en: 'Process Standardization' },
+    { key: 'ehs', zh: 'EHS标准化', en: 'EHS Standardization' },
+    { key: 'product', zh: '产品标准化', en: 'Product Standardization' },
+  ];
 
   const categories = [
     {
@@ -498,6 +614,7 @@ function StandardsPage({ onNavigate }) {
       ] 
     }
   ];
+  const activeStandard = activeSubItem ? getLocalizedStandard(activeSubItem, isEn) : null;
 
   // 根据 URL slug 定位到对应分类与子项（分享链接或刷新时）
   useEffect(() => {
@@ -534,7 +651,7 @@ function StandardsPage({ onNavigate }) {
                   onClick={() => setActiveCategory(activeCategory === category.name ? null : category.name)}
                   className={`flex items-center justify-between w-full text-left font-bold text-lg mb-2 transition-colors ${activeCategory === category.name ? 'text-gray-900' : 'text-gray-400 hover:text-gray-700'}`}
                 >
-                  <span>{category.name}</span>
+                  <span>{standardCategoryLabel(category.name, isEn)}</span>
                   <ChevronDown size={18} className={`transition-transform duration-300 ${activeCategory === category.name ? 'rotate-180 text-gray-900' : 'text-gray-300'}`} />
                 </button>
                 {/* 二级菜单 (仅在选中项展开，可滚动显示全部子项) */}
@@ -550,17 +667,17 @@ function StandardsPage({ onNavigate }) {
                             onClick={() => {
                               setActiveCategory(category.name);
                               setActiveSubItem(itemKey);
-                              if (standardSlug) navigate(`/standards/${standardSlug}`);
+                              if (standardSlug) navigate(withLangPrefix(`/standards/${standardSlug}`, isEn));
                             }}
                             className={`text-sm text-left w-full transition-colors ${activeSubItem === itemKey ? 'text-[#A1D573] font-bold' : 'text-gray-500 hover:text-gray-900 hover:font-medium'}`}
                           >
-                            {itemName}
+                            {standardItemLabel(itemName, isEn)}
                           </button>
                         </li>
                       );
                     })}
                     {category.sub.length === 0 && (
-                      <li><span className="text-sm text-gray-300 italic">内容建设中...</span></li>
+                      <li><span className="text-sm text-gray-300 italic">{t('内容建设中...', 'Content in preparation...')}</span></li>
                     )}
                   </ul>
                 </div>
@@ -575,18 +692,22 @@ function StandardsPage({ onNavigate }) {
              /* 当选中了二级子项目时，展示具体条款界面 */
              <div className="max-w-4xl animate-fade-in-up">
                 <h1 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 tracking-tight">
-                  {STANDARDS_DB[activeSubItem]?.displayName ?? activeSubItem}
+                  {isEn
+                    ? standardItemLabel(activeStandard?.displayName ?? activeSubItem, true)
+                    : (activeStandard?.displayName ?? activeSubItem)}
                 </h1>
                 
                 <h2 className="text-xl text-gray-800 font-medium mb-12 leading-relaxed border-l-4 border-[#A1D573] pl-6">
-                  关于“{STANDARDS_DB[activeSubItem]?.displayName ?? activeSubItem}”维度的详细管控标准、执行规范与审查红线。
+                  {t('关于“', 'Detailed control standards, execution specs, and audit red lines for "')}{isEn
+                    ? standardItemLabel(activeStandard?.displayName ?? activeSubItem, true)
+                    : (activeStandard?.displayName ?? activeSubItem)}{t('”维度的详细管控标准、执行规范与审查红线。', '".')}
                 </h2>
 
                 {/* 针对不同子项渲染具体内容 */}
-                {STANDARDS_DB[activeSubItem] ? (
+                {activeStandard ? (
                   <div className="space-y-12">
                     {(() => {
-                      const current = STANDARDS_DB[activeSubItem];
+                      const current = activeStandard;
                       const isRisk = current && current.risk;
                       const hasLongTrigger = isRisk && !!current.longTrigger;
 
@@ -599,10 +720,10 @@ function StandardsPage({ onNavigate }) {
                               <div className="p-5 rounded-2xl bg-orange-50 border border-orange-100 flex flex-col gap-3 hover:shadow-md transition-shadow">
                                 <div className="flex items-center gap-2 text-orange-600 font-medium">
                                   <AlertTriangle size={16} />
-                                  <span className="text-xs uppercase tracking-wider font-bold">风险值</span>
+                                  <span className="text-xs uppercase tracking-wider font-bold">{t('风险值', 'Risk Value')}</span>
                                 </div>
                                 <p className="text-orange-900 font-bold text-lg">
-                                  {current.riskValue || '—'}
+                                  {riskValueLabel(current.riskValue) || '—'}
                                 </p>
                               </div>
 
@@ -610,10 +731,10 @@ function StandardsPage({ onNavigate }) {
                               <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col gap-3 hover:shadow-md transition-shadow">
                                 <div className="flex items-center gap-2 text-gray-500 font-medium">
                                   <Activity size={16} className="text-blue-500" />
-                                  <span className="text-xs uppercase tracking-wider font-bold">发生频率</span>
+                                  <span className="text-xs uppercase tracking-wider font-bold">{t('发生频率', 'Frequency')}</span>
                                 </div>
                                 <p className="text-gray-900 font-bold text-lg">
-                                  {current.riskFrequency || '—'}
+                                  {riskFrequencyLabel(current.riskFrequency) || '—'}
                                 </p>
                               </div>
 
@@ -621,7 +742,7 @@ function StandardsPage({ onNavigate }) {
                               <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col gap-3 hover:shadow-md transition-shadow">
                                 <div className="flex items-center gap-2 text-gray-500 font-medium">
                                   <Users size={16} className="text-purple-500" />
-                                  <span className="text-xs uppercase tracking-wider font-bold">承受风险方</span>
+                                  <span className="text-xs uppercase tracking-wider font-bold">{t('承受风险方', 'Risk Owner')}</span>
                                 </div>
                                 <p className="text-gray-900 font-bold text-base leading-snug whitespace-pre-wrap">
                                   {current.riskOwner || '—'}
@@ -633,7 +754,7 @@ function StandardsPage({ onNavigate }) {
                                 <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col gap-3 hover:shadow-md transition-shadow">
                                   <div className="flex items-center gap-2 text-gray-500 font-medium">
                                     <Zap size={16} className="text-yellow-500" />
-                                    <span className="text-xs uppercase tracking-wider font-bold">触发条件</span>
+                                    <span className="text-xs uppercase tracking-wider font-bold">{t('触发条件', 'Trigger')}</span>
                                   </div>
                                   <p className="text-gray-900 font-bold text-base leading-snug whitespace-pre-wrap">
                                     {current.riskTrigger || '—'}
@@ -648,7 +769,7 @@ function StandardsPage({ onNavigate }) {
                               <div className="flex-1">
                                 <h4 className="text-red-800 font-bold mb-3 flex items-center gap-2 text-lg">
                                   <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                                  可能发生的风险
+                                  {t('可能发生的风险', 'Possible Risk')}
                                 </h4>
                                 <p className="text-red-900/80 leading-relaxed font-medium text-lg whitespace-pre-wrap">
                                   {current.riskPossible || '—'}
@@ -663,7 +784,7 @@ function StandardsPage({ onNavigate }) {
                               <div className="flex-1">
                                 <h4 className="text-red-800 font-bold mb-3 flex items-center gap-2 text-lg">
                                   <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                                  不管控的后果
+                                  {t('不管控的后果', 'Uncontrolled Consequence')}
                                 </h4>
                                 <p className="text-red-900/80 leading-relaxed font-medium text-lg whitespace-pre-wrap">
                                   {current.riskOutcome || '—'}
@@ -683,7 +804,7 @@ function StandardsPage({ onNavigate }) {
                             <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col gap-4 hover:shadow-md transition-shadow">
                               <div className="flex items-center gap-2 text-gray-500 font-medium">
                                 <Zap size={18} className="text-yellow-500" />
-                                <span className="text-sm tracking-wide uppercase">触发条件</span>
+                                <span className="text-sm tracking-wide uppercase">{t('触发条件', 'Trigger')}</span>
                               </div>
                               <p className="text-gray-900 font-bold leading-snug whitespace-pre-wrap">
                                 {current.trigger}
@@ -694,7 +815,7 @@ function StandardsPage({ onNavigate }) {
                           <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col gap-4 hover:shadow-md transition-shadow">
                             <div className="flex items-center gap-2 text-gray-500 font-medium">
                               <Activity size={18} className="text-blue-500" />
-                              <span className="text-sm tracking-wide uppercase">过程检查</span>
+                              <span className="text-sm tracking-wide uppercase">{t('过程检查', 'Process Check')}</span>
                             </div>
                             <p className="text-gray-900 font-bold leading-snug whitespace-pre-wrap">{current.check}</p>
                           </div>
@@ -702,7 +823,7 @@ function StandardsPage({ onNavigate }) {
                           <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col gap-4 hover:shadow-md transition-shadow">
                             <div className="flex items-center gap-2 text-gray-500 font-medium">
                               <FileText size={18} className="text-[#A1D573]" />
-                              <span className="text-sm tracking-wide uppercase">执行标准</span>
+                              <span className="text-sm tracking-wide uppercase">{t('执行标准', 'Execution Standard')}</span>
                             </div>
                             <p className="text-gray-900 font-bold leading-snug whitespace-pre-wrap">{current.reference}</p>
                           </div>
@@ -713,22 +834,22 @@ function StandardsPage({ onNavigate }) {
                     {/* 具体标准 / 管控措施条款列表 */}
                     <div>
                       <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
-                        {STANDARDS_DB[activeSubItem]?.risk ? (
+                        {activeStandard?.risk ? (
                           <>
                             <ShieldCheck size={24} className="text-[#A1D573]" />
-                            管控措施细则
+                            {t('管控措施细则', 'Control Measures')}
                           </>
                         ) : (
                           <>
                             <Layers size={24} className="text-[#A1D573]" />
-                            管理标准细则
+                            {t('管理标准细则', 'Management Standards')}
                           </>
                         )}
                       </h3>
                       
                       <div className="space-y-5">
                         {(() => {
-                          const current = STANDARDS_DB[activeSubItem];
+                          const current = activeStandard;
                           if (!current) return null;
 
                           const rules = current.rules || [];
@@ -838,13 +959,13 @@ function StandardsPage({ onNavigate }) {
                       </div>
 
                       {/* 如果存在 longTrigger，则在所有条款列表之后统一展示触发条件说明 */}
-                      {STANDARDS_DB[activeSubItem]?.longTrigger && (
+                      {activeStandard?.longTrigger && (
                         <div className="mt-10 pt-6 border-t border-gray-100">
                           <p className="text-xs font-bold text-gray-400 mb-2 tracking-wide uppercase">
-                            触发条件
+                            {t('触发条件', 'Trigger')}
                           </p>
                           <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
-                            {STANDARDS_DB[activeSubItem].longTrigger}
+                            {activeStandard.longTrigger}
                           </p>
                         </div>
                       )}
@@ -855,7 +976,7 @@ function StandardsPage({ onNavigate }) {
                   <div className="prose prose-lg max-w-none text-gray-600">
                      <div className="h-[500px] w-full bg-gray-50 rounded-3xl border border-dashed border-gray-200 flex flex-col items-center justify-center gap-4">
                         <FileText size={48} className="text-gray-300" />
-                        <p className="text-gray-400 font-mono text-sm">{activeSubItem} 的具体业务标准与图文条例正在录入中...</p>
+                        <p className="text-gray-400 font-mono text-sm">{isEn ? `Detailed standards for ${standardItemLabel(activeSubItem, true)} are being prepared...` : `${activeSubItem} 的具体业务标准与图文条例正在录入中...`}</p>
                      </div>
                   </div>
                 )}
@@ -869,43 +990,43 @@ function StandardsPage({ onNavigate }) {
                 </div>
                 
                 <h1 className="text-5xl lg:text-7xl font-black text-gray-900 mb-8 uppercase tracking-tight">
-                  极致标准，<br/>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A1D573] to-[#8BC34A]">铸就极致服务。</span>
+                  {t('极致标准，', 'Ultimate Standards,')}<br/>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A1D573] to-[#8BC34A]">{t('铸就极致服务。', 'Delivering Ultimate Service.')}</span>
                 </h1>
                 
                 <h2 className="text-2xl text-gray-800 font-medium mb-12 leading-relaxed border-l-4 border-[#A1D573] pl-6">
-                  标准，是 JustPai 兑现卓越交付的基石。我们不依赖个人的经验主义，我们以极致的严谨，重新定义工程与运维规范。
+                  {t('标准，是 JustPai 兑现卓越交付的基石。我们不依赖个人的经验主义，我们以极致的严谨，重新定义工程与运维规范。', 'Standards are the foundation of JustPai delivery excellence. We do not rely on individual experience; we redefine engineering and operations through rigorous standards.')}
                 </h2>
 
                 <div className="prose prose-lg max-w-none text-gray-600 space-y-6">
                    <p>
-                     在复杂的办公基础设施与园区运维环境中，任何微小的疏漏都可能带来不可估量的损失。JustPai 深知，企业客户需要的不仅仅是问题的解决，更是过程的完全透明与结果的绝对确定性。
+                     {t('在复杂的办公基础设施与园区运维环境中，任何微小的疏漏都可能带来不可估量的损失。JustPai 深知，企业客户需要的不仅仅是问题的解决，更是过程的完全透明与结果的绝对确定性。', 'In complex workplace infrastructure and park operations, even minor omissions can cause significant losses. JustPai knows that enterprise clients need not only problem-solving, but also full process transparency and predictable outcomes.')}
                    </p>
                    <p>
-                     我们的《全域智能服务管控标准》历经数百个标杆项目的实战打磨，涵盖了从 <strong>环境保护、安全生产</strong> 到 <strong>健康管理、工艺质量</strong> 的每一个核心控制点。这不仅仅是一份写在纸上的文档，它更是 1000+ JustPai 资深工程师日复一日的行动纲领，是我们对“不留死角、不留隐患”的庄严承诺。
+                     {t('我们的《全域智能服务管控标准》历经数百个标杆项目的实战打磨，涵盖了从 ', 'Our Intelligent Full-Domain Service Control Standards are refined through hundreds of benchmark projects, covering every core checkpoint from ')}<strong>{t('环境保护、安全生产', 'environmental protection and work safety')}</strong>{t(' 到 ', ' to ')}<strong>{t('健康管理、工艺质量', 'health management and workmanship quality')}</strong>{t(' 的每一个核心控制点。这不仅仅是一份写在纸上的文档，它更是 1000+ JustPai 资深工程师日复一日的行动纲领，是我们对“不留死角、不留隐患”的庄严承诺。', '. This is not just a document, but the daily playbook of 1,000+ senior JustPai engineers and our commitment to zero blind spots and zero hidden hazards.')}
                    </p>
 
                    {/* 五大标准化体系介绍区块 */}
                    <div className="mt-16 mb-12">
                      <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3">
                        <Layers className="text-[#FFEB69]" size={28} />
-                       全维标准化驱动体系
+                       {t('全维标准化驱动体系', 'Multi-dimensional Standardization Framework')}
                      </h3>
 
                      <div className="flex flex-col md:flex-row gap-8 bg-gray-50/50 p-2 rounded-3xl border border-gray-100">
                        {/* 左侧竖向导航 */}
                        <div className="flex md:flex-col gap-2 overflow-x-auto no-scrollbar md:w-1/3 shrink-0 p-4">
-                         {['质量标准化', '服务标准化', '流程标准化', 'EHS标准化', '产品标准化'].map((std) => (
+                        {standardIntroTabs.map((tab) => (
                            <button
-                             key={std}
-                             onClick={() => setActiveStandardIntro(std)}
+                            key={tab.key}
+                            onClick={() => setActiveStandardIntro(tab.key)}
                              className={`text-left px-5 py-4 rounded-xl transition-all duration-300 font-bold whitespace-nowrap ${
-                               activeStandardIntro === std
+                              activeStandardIntro === tab.key
                                  ? 'bg-white text-gray-900 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 scale-105 md:scale-100 md:translate-x-2'
                                  : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
                              }`}
                            >
-                             {std}
+                            {isEn ? tab.en : tab.zh}
                            </button>
                          ))}
                        </div>
@@ -915,47 +1036,47 @@ function StandardsPage({ onNavigate }) {
                          {/* 装饰性背景发光 */}
                          <div className="absolute -top-12 -right-12 w-40 h-40 bg-[#A1D573] rounded-full blur-[80px] opacity-10"></div>
 
-                         {activeStandardIntro === '质量标准化' && (
+                        {activeStandardIntro === 'quality' && (
                            <div className="animate-fade-in-up">
-                             <h4 className="text-xl font-bold text-gray-900 mb-4">杜绝参差不齐，交付即是标杆</h4>
+                            <h4 className="text-xl font-bold text-gray-900 mb-4">{t('杜绝参差不齐，交付即是标杆', 'No inconsistency. Every delivery is benchmark-level.')}</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               我们摒弃了传统工程行业“看师傅手艺”的盲盒模式。通过建立详尽的工艺工法库、节点验收规范和防错机制，确保我们在全国的每一处施工都符合统一的工业级要求。无论是百平米的微改，还是万平米的整装，JustPai的质量输出始终如一。
+                              {t('我们摒弃了传统工程行业“看师傅手艺”的盲盒模式。通过建立详尽的工艺工法库、节点验收规范和防错机制，确保我们在全国的每一处施工都符合统一的工业级要求。无论是百平米的微改，还是万平米的整装，JustPai的质量输出始终如一。', 'We reject the traditional luck-based model. With process libraries, milestone acceptance criteria, and error-proof controls, every project follows unified industrial-grade requirements nationwide.')}
                              </p>
                            </div>
                          )}
 
-                         {activeStandardIntro === '服务标准化' && (
+                        {activeStandardIntro === 'service' && (
                            <div className="animate-fade-in-up">
-                             <h4 className="text-xl font-bold text-gray-900 mb-4">有温度的体验，有刻度的规范</h4>
+                            <h4 className="text-xl font-bold text-gray-900 mb-4">{t('有温度的体验，有刻度的规范', 'Human-centered experience with measurable standards')}</h4>
                              <p className="text-gray-600 leading-relaxed">
-                             Justpai平台围绕自有师傅管理、全国客服支持与售后巡检机制，建立统一的服务流程与执行规范，并通过数字化平台实现从项目立项、施工交付到评价反馈、售后维护的全流程闭环管理，确保不同地区、不同项目都能为客户提供高效、专业、稳定且有温度的服务体验。
+                            {t('Justpai平台围绕自有师傅管理、全国客服支持与售后巡检机制，建立统一的服务流程与执行规范，并通过数字化平台实现从项目立项、施工交付到评价反馈、售后维护的全流程闭环管理，确保不同地区、不同项目都能为客户提供高效、专业、稳定且有温度的服务体验。', 'JustPai builds unified service flows and execution standards through engineer management, nationwide support, and after-sales inspection, delivering a closed-loop process from project initiation to maintenance.')}
                              </p>
                            </div>
                          )}
 
-                         {activeStandardIntro === '流程标准化' && (
+                        {activeStandardIntro === 'process' && (
                            <div className="animate-fade-in-up">
-                             <h4 className="text-xl font-bold text-gray-900 mb-4">数字闭环，让运维更透明</h4>
+                            <h4 className="text-xl font-bold text-gray-900 mb-4">{t('数字闭环，让运维更透明', 'Digital closed loop for transparent operations')}</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               依托 JustPai 最新的月海1.0运维面板系统，我们将复杂的工程运维切分为标准的SOP节点。从需求发起、智能派单、现场签到、过程记录到最终验收验收评价，所有流程线上流转、不可逆、防篡改。让进度100%透明，让管理成本降至最低。
+                              {t('依托 JustPai 最新的月海1.0运维面板系统，我们将复杂的工程运维切分为标准的SOP节点。从需求发起、智能派单、现场签到、过程记录到最终验收验收评价，所有流程线上流转、不可逆、防篡改。让进度100%透明，让管理成本降至最低。', 'Powered by the Yuehai 1.0 panel, we split complex work into standard SOP nodes. From request initiation and dispatch to on-site sign-in, process logs, and acceptance, every step is online, traceable, and tamper-resistant.')}
                              </p>
                            </div>
                          )}
 
-                         {activeStandardIntro === 'EHS标准化' && (
+                        {activeStandardIntro === 'ehs' && (
                            <div className="animate-fade-in-up">
-                             <h4 className="text-xl font-bold text-gray-900 mb-4">安全生产，守护绿色底线</h4>
+                            <h4 className="text-xl font-bold text-gray-900 mb-4">{t('安全生产，守护绿色底线', 'Safety first, protecting the green baseline')}</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               EHS (Environment, Health, Safety) 是我们一切工作的前提。我们依据国家现行施工环境、健康、安全规范及行业标准，制定了极其严苛的环保与安全双轨红线。从噪音与粉尘的源头抑制、有毒有害物质的零容忍，到高空与动火作业的强制审批，JustPai 致力于打造零伤害、零污染的施工运维环境。
+                              {t('EHS (Environment, Health, Safety) 是我们一切工作的前提。我们依据国家现行施工环境、健康、安全规范及行业标准，制定了极其严苛的环保与安全双轨红线。从噪音与粉尘的源头抑制、有毒有害物质的零容忍，到高空与动火作业的强制审批，JustPai 致力于打造零伤害、零污染的施工运维环境。', 'EHS is the baseline for all work. Based on national and industry standards, we enforce strict environmental and safety red lines to build a zero-injury, zero-pollution operating environment.')}
                              </p>
                            </div>
                          )}
 
-                         {activeStandardIntro === '产品标准化' && (
+                        {activeStandardIntro === 'product' && (
                            <div className="animate-fade-in-up">
-                             <h4 className="text-xl font-bold text-gray-900 mb-4">像点外卖一样采购工程服务</h4>
+                            <h4 className="text-xl font-bold text-gray-900 mb-4">{t('像点外卖一样采购工程服务', 'Procure engineering services as easily as ordering food')}</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               我们将极度非标的工程与运维服务，解构成500+项可直接“加入购物车”的标准化产品（SKU）。清晰的计价模型、明确的交付边界和承诺的服务SLA，让企业客户彻底告别黑箱报价和扯皮扯筋，实现“所需即所得”。
+                              {t('我们将极度非标的工程与运维服务，解构成500+项可直接“加入购物车”的标准化产品（SKU）。清晰的计价模型、明确的交付边界和承诺的服务SLA，让企业客户彻底告别黑箱报价和扯皮扯筋，实现“所需即所得”。', 'We convert highly non-standard services into 500+ standardized SKUs. With clear pricing, delivery boundaries, and SLA commitments, enterprise clients get predictable outcomes and transparent execution.')}
                              </p>
                            </div>
                          )}
@@ -968,8 +1089,8 @@ function StandardsPage({ onNavigate }) {
                         <Menu size={24} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 text-base mb-1">开始查阅标准档案</h4>
-                        <p className="text-sm text-gray-500 m-0">请在左侧目录点击展开您关心的一级管控领域，并选择具体的子类目以查阅详细的执行规范、操作流程与现场审查红线。</p>
+                        <h4 className="font-bold text-gray-900 text-base mb-1">{t('开始查阅标准档案', 'Start Exploring Standard Files')}</h4>
+                        <p className="text-sm text-gray-500 m-0">{t('请在左侧目录点击展开您关心的一级管控领域，并选择具体的子类目以查阅详细的执行规范、操作流程与现场审查红线。', 'Use the left directory to expand a control domain and choose a sub-item to review detailed execution standards, operating procedures, and on-site audit red lines.')}</p>
                       </div>
                    </div>
                 </div>
@@ -984,7 +1105,8 @@ function StandardsPage({ onNavigate }) {
 
 // ================= 子页面组件 =================
 
-function HomePage({ onNavigate }) {
+function HomePage({ onNavigate, isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
   const { news, cases } = useContent();
   const featuredCases = [...(cases || ALL_CASES)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
   const featuredNews = [...(news || ALL_NEWS)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
@@ -1006,27 +1128,29 @@ function HomePage({ onNavigate }) {
           </div>
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.1] text-gray-900">
-            重塑您的 <br className="hidden md:block"/>
+            {t('重塑您的', 'Rebuild Your')} <br className="hidden md:block"/>
             <span className="relative inline-block">
-              <span className="relative z-10">办公基础设施</span>
+              <span className="relative z-10">{t('办公基础设施', 'Office Infrastructure')}</span>
               <span className="absolute bottom-2 left-0 w-full h-4 bg-[#FFEB69] -z-10 opacity-60 rounded-sm"></span>
             </span>
           </h1>
           
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            JustPai 将传统的装饰工程与设施运维转化为可视化的数字资产。
-            通过智能平台管理，让您的办公空间更智能、更高效、更具未来感。
+            {t(
+              'JustPai 将传统的装饰工程与设施运维转化为可视化的数字资产。通过智能平台管理，让您的办公空间更智能、更高效、更具未来感。',
+              'JustPai transforms traditional engineering and facility operations into visualized digital assets. Through intelligent platform management, your workspace becomes smarter, more efficient, and future-ready.',
+            )}
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-20">
             <button className={`${BRAND_GRADIENT} text-gray-900 text-lg px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-[#A1D573]/30 transition-all hover:scale-105`}>
-              启动智能改造 <ArrowRight size={20} />
+              {t('启动智能改造', 'Start Smart Upgrade')} <ArrowRight size={20} />
             </button>
             <button 
               onClick={() => onNavigate('standards')}
               className={`border border-gray-200 bg-white text-gray-900 text-lg px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:shadow-lg hover:scale-105 transition-all hover-rhythm`}
             >
-              我们的标准
+              {t('我们的标准', 'Our Standards')}
             </button>
           </div>
 
@@ -1058,8 +1182,8 @@ function HomePage({ onNavigate }) {
       <section id="features" className="py-24 px-6 relative bg-white overflow-hidden z-0">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-gray-900">智能运维矩阵</h2>
-            <p className="text-gray-500">抛弃陈旧的报修单，拥抱数据驱动的空间管理。</p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-gray-900">{t('智能运维矩阵', 'Smart O&M Matrix')}</h2>
+            <p className="text-gray-500">{t('抛弃陈旧的报修单，拥抱数据驱动的空间管理。', 'Move beyond outdated repair tickets and embrace data-driven workspace operations.')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1067,32 +1191,32 @@ function HomePage({ onNavigate }) {
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#FFEB69] transition-colors inline-block mb-8">
                 <Cpu size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">一站式智能驱动工程服务平台</h3>
-              <p className="text-gray-500 max-w-md">以智能科技重构工程服务，通过数字化系统整合产品商城、项目管理及全国供应链，实现全链条的标准化与透明化管理。</p>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">{t('一站式智能驱动工程服务平台', 'One-stop Intelligent Engineering Service Platform')}</h3>
+              <p className="text-gray-500 max-w-md">{t('以智能科技重构工程服务，通过数字化系统整合产品商城、项目管理及全国供应链，实现全链条的标准化与透明化管理。', 'Rebuild engineering services with smart technology by integrating product marketplace, project management, and nationwide supply chain into one standardized and transparent workflow.')}</p>
             </div>
 
             <div className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#A1D573] transition-colors inline-block mb-8">
                 <Activity size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">极速响应网络</h3>
-              <p className="text-gray-500 text-sm">200城+3000服务商，全国覆盖的敏捷工程服务。</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t('极速响应网络', 'Rapid Response Network')}</h3>
+              <p className="text-gray-500 text-sm">{t('200城+3000服务商，全国覆盖的敏捷工程服务。', 'Agile engineering services covering 200+ cities with 3,000+ service providers.')}</p>
             </div>
 
             <div className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#FFEB69] transition-colors inline-block mb-8">
                 <Zap size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">智慧协同生态闭环</h3>
-              <p className="text-gray-500 text-sm">打通需求、交付、运维全流程，构建多方高效协同的工程服务生态，降本增效，赋能企业长效发展。 </p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t('智慧协同生态闭环', 'Smart Collaboration Ecosystem')}</h3>
+              <p className="text-gray-500 text-sm">{t('打通需求、交付、运维全流程，构建多方高效协同的工程服务生态，降本增效，赋能企业长效发展。', 'Connect demand, delivery, and operations into one lifecycle to build a high-efficiency collaborative ecosystem that reduces cost and improves long-term growth.')}</p>
             </div>
 
              <div className={`col-span-1 md:col-span-2 rounded-3xl p-8 group relative overflow-hidden ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#A1D573] transition-colors inline-block mb-8">
                 <Layers size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">全生命周期数字化管理</h3>
-              <p className="text-gray-500 max-w-md">一体化智能管理，透明可溯的固定资产账本，让企业工程运维更高效、更可控。</p>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">{t('全生命周期数字化管理', 'Full Lifecycle Digital Management')}</h3>
+              <p className="text-gray-500 max-w-md">{t('一体化智能管理，透明可溯的固定资产账本，让企业工程运维更高效、更可控。', 'Integrated intelligent management and transparent asset records make enterprise engineering operations more efficient and controllable.')}</p>
             </div>
           </div>
         </div>
@@ -1102,12 +1226,12 @@ function HomePage({ onNavigate }) {
         <HeroParallax
           heading={(
             <>
-              最新升级
+              {t('最新升级', 'Latest Upgrade')}
               <br />
-              运维面板<span className="text-[#A1D573]">月海1.0</span>
+              {t('运维面板', 'Operations Panel')}<span className="text-[#A1D573]">{t('月海1.0', 'Yuehai 1.0')}</span>
             </>
           )}
-          description="JustPai 提供的不仅仅是随叫随到的维修师傅。我们将每一次服务数字化，为您生成可视化的空间健康报告。"
+          description={t('JustPai 提供的不仅仅是随叫随到的维修师傅。我们将每一次服务数字化，为您生成可视化的空间健康报告。', 'JustPai is more than on-demand maintenance. We digitalize every service interaction and generate visualized space health reports for your operations.')}
         />
       </section>
 
@@ -1115,11 +1239,11 @@ function HomePage({ onNavigate }) {
          <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">标杆合作案例</h2>
-                  <p className="text-gray-500">赋能各行业头部企业，打造智慧空间新标准</p>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{t('标杆合作案例', 'Benchmark Case Studies')}</h2>
+                  <p className="text-gray-500">{t('赋能各行业头部企业，打造智慧空间新标准', 'Empowering industry leaders to build new standards for smart spaces')}</p>
                </div>
                <button onClick={() => onNavigate('news')} className="text-sm font-bold text-[#A1D573] hover:underline flex items-center gap-1 group">
-                  新闻中心 <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform"/>
+                  {t('新闻中心', 'News')} <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform"/>
                </button>
             </div>
 
@@ -1152,15 +1276,15 @@ function HomePage({ onNavigate }) {
       <section className="py-24 px-6 relative overflow-hidden bg-white">
          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#A1D573]/5 to-transparent pointer-events-none"></div>
          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-gray-900">准备好升级您的<br/>办公空间了吗？</h2>
-            <p className="text-gray-500 text-lg mb-12 max-w-2xl mx-auto">加入数百家前瞻性企业，体验 JustPai 带来的无感式智能运维服务。现在注册，即可获得免费的“空间健康诊断”。</p>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-gray-900">{t('准备好升级您的', 'Ready to upgrade your')}<br/>{t('办公空间了吗？', 'workspace?')}</h2>
+            <p className="text-gray-500 text-lg mb-12 max-w-2xl mx-auto">{t('加入数百家前瞻性企业，体验 JustPai 带来的无感式智能运维服务。现在注册，即可获得免费的“空间健康诊断”。', 'Join hundreds of forward-looking companies and experience JustPai smart operations. Register now to get a free workspace health diagnosis.')}</p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                <button className={`${BRAND_GRADIENT} text-gray-900 font-bold px-12 py-4 rounded-full text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300`}>
-                  立即注册
+                  {t('立即注册', 'Register Now')}
                </button>
                <button className={`border border-gray-200 bg-white text-gray-900 font-bold px-12 py-4 rounded-full text-lg hover:scale-105 transition-all duration-300 hover-rhythm`}>
-                  登录
+                  {t('登录', 'Login')}
                </button>
             </div>
          </div>
@@ -1173,7 +1297,7 @@ function HomePage({ onNavigate }) {
           - 滚动速度：改 velocity，数值越大越快，如 140、180、220 */}
       <section className="py-16 px-0 bg-white border-t border-gray-50">
         <ScrollVelocity
-          texts={['Justpai ', '这么派 ']}
+          texts={['JustPai ', '这么派 ']}
           velocity={100}
           numCopies={20}  // 副本数量越多，整条跑马灯越长，左右更不容易留空
           scrollerClassName="text-lg md:text-4xl font-bold tracking-[-0.02em] px-6"
@@ -1186,11 +1310,11 @@ function HomePage({ onNavigate }) {
          <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
                <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">最新动态</h2>
-                  <p className="text-gray-500">洞察行业趋势，了解 JustPai 最新进展</p>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('最新动态', 'Latest Updates')}</h2>
+                  <p className="text-gray-500">{t('洞察行业趋势，了解 JustPai 最新进展', 'Track industry trends and follow the latest JustPai progress')}</p>
                </div>
                <button onClick={() => onNavigate('news')} className="text-sm font-bold text-[#A1D573] hover:underline flex items-center gap-1 group">
-                  新闻中心 <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform"/>
+                  {t('新闻中心', 'News')} <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform"/>
                </button>
             </div>
 
@@ -1222,7 +1346,8 @@ function HomePage({ onNavigate }) {
   );
 }
 
-function NewsPage({ onNavigate }) {
+function NewsPage({ onNavigate, isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
   const { news, cases } = useContent();
   const featuredCases = [...(cases || ALL_CASES)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
   const featuredNews = [...(news || ALL_NEWS)].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
@@ -1242,17 +1367,17 @@ function NewsPage({ onNavigate }) {
                <Newspaper size={16} className="text-[#A1D573]" />
                <span className="text-xs font-bold text-gray-600 tracking-wide">NEWS CENTER</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">新闻中心</h1>
-            <p className="text-gray-500 text-lg">JustPai 最新资讯、行业动态与标杆案例</p>
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">{t('新闻中心', 'News Center')}</h1>
+            <p className="text-gray-500 text-lg">{t('JustPai 最新资讯、行业动态与标杆案例', 'Latest JustPai updates, industry insights, and benchmark case studies')}</p>
          </div>
       </section>
 
       <section className="py-24 px-6 bg-white z-0 relative">
          <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
-               <h2 className="text-3xl font-bold text-gray-900">最新动态</h2>
+               <h2 className="text-3xl font-bold text-gray-900">{t('最新动态', 'Latest Updates')}</h2>
                <button onClick={() => onNavigate('news-list')} className="text-sm font-bold text-[#A1D573] flex items-center gap-1 hover:underline">
-                  查看更多 <ChevronRight size={16} />
+                  {t('查看更多', 'View More')} <ChevronRight size={16} />
                </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1279,9 +1404,9 @@ function NewsPage({ onNavigate }) {
       <section className="py-24 px-6 bg-gray-50">
          <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-end mb-12">
-               <h2 className="text-3xl font-bold text-gray-900">标杆合作案例</h2>
+               <h2 className="text-3xl font-bold text-gray-900">{t('标杆合作案例', 'Benchmark Case Studies')}</h2>
                <button onClick={() => onNavigate('cases-list')} className="text-sm font-bold text-[#A1D573] flex items-center gap-1 hover:underline">
-                  查看更多 <ChevronRight size={16} />
+                  {t('查看更多', 'View More')} <ChevronRight size={16} />
                </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1309,7 +1434,8 @@ function NewsPage({ onNavigate }) {
   );
 }
 
-function NewsListPage({ onNavigate }) {
+function NewsListPage({ onNavigate, isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
   const { news } = useContent();
   const list = [...(news || ALL_NEWS)].sort((a, b) => new Date(b.date) - new Date(a.date));
   return (
@@ -1320,7 +1446,7 @@ function NewsListPage({ onNavigate }) {
          </div>
          
          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">全部动态</h1>
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">{t('全部动态', 'All News')}</h1>
          </div>
       </section>
       <section className="py-16 px-6 bg-white min-h-[60vh] relative z-0">
@@ -1348,7 +1474,8 @@ function NewsListPage({ onNavigate }) {
   );
 }
 
-function CaseListPage({ onNavigate }) {
+function CaseListPage({ onNavigate, isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
   const { cases } = useContent();
   const list = [...(cases || ALL_CASES)].sort((a, b) => new Date(b.date) - new Date(a.date));
   return (
@@ -1359,7 +1486,7 @@ function CaseListPage({ onNavigate }) {
          </div>
 
          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">全部合作案例</h1>
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">{t('全部合作案例', 'All Case Studies')}</h1>
          </div>
       </section>
       <section className="py-16 px-6 bg-white min-h-[60vh] relative z-0">
@@ -1385,7 +1512,8 @@ function CaseListPage({ onNavigate }) {
   );
 }
 
-function AboutPage() {
+function AboutPage({ isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
   return (
     <div className="animate-fade-in-up">
       <section className="relative pt-40 pb-24 px-6 bg-white border-b border-gray-100 z-10">
@@ -1406,14 +1534,14 @@ function AboutPage() {
                   <span className="text-xs font-bold text-gray-600 tracking-wide">ABOUT US</span>
                </div>
                <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                  专注企业 <br/>
+                  {t('专注企业', 'Focused on Enterprise')} <br/>
                   <span className="relative z-10 inline-block">
-                     快速工程服务
+                     {t('快速工程服务', 'Rapid Engineering Services')}
                      <span className="absolute bottom-2 left-0 w-full h-3 bg-[#FFEB69] -z-10 opacity-60"></span>
                   </span>
                </h1>
                <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                  那就这么派，是一家极具创造力的互联网快速工程服务提供商。借助超前的“线上线下一体化”商业模式，为企业提供快速、敏捷、专业的工程服务。
+                  {t('那就这么派，是一家极具创造力的互联网快速工程服务提供商。借助超前的“线上线下一体化”商业模式，为企业提供快速、敏捷、专业的工程服务。', 'JustPai is a highly creative internet-based rapid engineering service provider. With an advanced online-offline integrated model, we deliver fast, agile, and professional services for enterprises.')}
                </p>
             </div>
            <div className="relative h-64 lg:h-96 w-full hidden lg:block">
@@ -1424,14 +1552,14 @@ function AboutPage() {
                         <Users className="text-[#FFEB69] w-10 h-10" />
                         <div>
                            <div className="text-3xl font-bold text-[#FFEB69]">1000+</div>
-                           <div className="text-sm text-[#FFEB69]">专业师傅</div>
+                           <div className="text-sm text-[#FFEB69]">{t('专业师傅', 'Professional Engineers')}</div>
                         </div>
                      </div>
                      <div className="w-40 h-48 bg-[#A1D573]/50 rounded-2xl shadow-xl p-6 flex flex-col justify-between">
                         <MapPin className="text-[#163300] w-10 h-10" />
                         <div>
                            <div className="text-3xl font-bold text-[#163300]">150+</div>
-                           <div className="text-sm text-[#163300]">服务城市</div>
+                           <div className="text-sm text-[#163300]">{t('服务城市', 'Service Cities')}</div>
                         </div>
                      </div>
                   </div>
@@ -1443,15 +1571,15 @@ function AboutPage() {
       <section className="py-24 px-6 relative bg-white z-0">
          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-               <h2 className="text-3xl font-bold text-gray-900">我们的核心优势</h2>
-               <p className="text-gray-500 mt-2">构建“平台+网络+服务”的完整生态闭环</p>
+               <h2 className="text-3xl font-bold text-gray-900">{t('我们的核心优势', 'Our Core Strengths')}</h2>
+               <p className="text-gray-500 mt-2">{t('构建“平台+网络+服务”的完整生态闭环', 'Building a full ecosystem of platform + network + service')}</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
-                  { title: "线上数字化平台", icon: Smartphone, desc: "500+标准化快速工程及运维产品，客户可在线咨询、下单。全流程透明化管理，让工程服务像网购一样便捷。" },
-                  { title: "全国服务网络", icon: MapPin, desc: "线下服务网络覆盖全国56+核心城市，划分华北、华东、华南、华西十大业务区域，服务能力下沉至4线城市。" },
-                  { title: "敏捷交付服务", icon: Clock, desc: "提供年度框架服务及六大类标准化服务。依托全国供应链生态，实现“所需即所得”的高效交付体验。" }
+                  { title: t("线上数字化平台", "Digital Online Platform"), icon: Smartphone, desc: t("500+标准化快速工程及运维产品，客户可在线咨询、下单。全流程透明化管理，让工程服务像网购一样便捷。", "500+ standardized engineering and operations products with online consultation and ordering. Full-process transparency makes engineering services as easy as e-commerce.") },
+                  { title: t("全国服务网络", "Nationwide Service Network"), icon: MapPin, desc: t("线下服务网络覆盖全国56+核心城市，划分华北、华东、华南、华西十大业务区域，服务能力下沉至4线城市。", "Offline service network covers 56+ core cities across China, with capability extending to lower-tier cities.") },
+                  { title: t("敏捷交付服务", "Agile Delivery Services"), icon: Clock, desc: t("提供年度框架服务及六大类标准化服务。依托全国供应链生态，实现“所需即所得”的高效交付体验。", "Annual framework services and six standardized categories supported by a nationwide supply chain for efficient delivery.") }
                ].map((item, i) => (
                   <div key={i} className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
                      <div className={`w-14 h-14 rounded-2xl ${BG_GRADIENT_LIGHT} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
@@ -1467,7 +1595,7 @@ function AboutPage() {
 
       <section className="py-24 px-6 bg-gray-50">
          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">企业发展里程碑</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">{t('企业发展里程碑', 'Company Milestones')}</h2>
             <div className="relative pl-8 md:pl-0">
                <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 -translate-x-1/2 hidden md:block"></div>
                <div className="absolute left-8 top-0 bottom-0 w-px bg-gray-200 md:hidden"></div>
@@ -1487,10 +1615,10 @@ function AboutPage() {
                               <span className="md:hidden text-4xl font-bold text-gray-100 absolute right-4 top-4">{item.year}</span>
                               
                               <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                                 {item.title}
+                                 {item.title[isEn ? 'en' : 'zh']}
                               </h3>
                               <p className="text-sm text-gray-500 leading-relaxed text-justify">
-                                 {item.desc}
+                                 {item.desc[isEn ? 'en' : 'zh']}
                               </p>
                            </div>
                         </div>
@@ -1503,21 +1631,21 @@ function AboutPage() {
 
       <section className="py-24 px-6 bg-white">
          <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-16">全场景工程服务能力</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-16">{t('全场景工程服务能力', 'Full-Scenario Engineering Capabilities')}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
                {SERVICE_ICONS.map((service, idx) => (
                   <div key={idx} className="group bg-white p-6 rounded-2xl border border-gray-100 hover:border-[#FFEB69] hover:shadow-lg transition-all flex flex-col items-center justify-center aspect-square">
                      <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 mb-4 group-hover:bg-[#FFEB69]/20 group-hover:text-black transition-colors">
                         <service.icon size={24} strokeWidth={1.5} />
                      </div>
-                     <span className="font-bold text-gray-700 text-sm group-hover:text-black">{service.name}</span>
+                     <span className="font-bold text-gray-700 text-sm group-hover:text-black">{service.name[isEn ? 'en' : 'zh']}</span>
                   </div>
                ))}
                <div className="group bg-white p-6 rounded-2xl border border-gray-100 hover:border-[#FFEB69] hover:shadow-lg transition-all flex flex-col items-center justify-center aspect-square cursor-pointer">
                   <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 mb-4 group-hover:bg-[#FFEB69]/20 group-hover:text-black transition-colors">
                      <ShieldCheck size={24} strokeWidth={1.5} />
                   </div>
-                  <span className="font-bold text-gray-700 text-sm group-hover:text-black">认证检测</span>
+                  <span className="font-bold text-gray-700 text-sm group-hover:text-black">{t('认证检测', 'Certification & Inspection')}</span>
                </div>
             </div>
          </div>
@@ -1526,7 +1654,8 @@ function AboutPage() {
   );
 }
 
-function JoinPage() {
+function JoinPage({ isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
    return (
      <div className="animate-fade-in-up">
        <section className="relative pt-40 pb-24 px-6 bg-white border-b border-gray-100 z-10">
@@ -1548,14 +1677,14 @@ function JoinPage() {
                    <span className="text-xs font-bold text-gray-600 tracking-wide">CAREERS & PARTNERSHIP</span>
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                   共建未来 <br/>
+                   {t('共建未来', 'Build the Future Together')} <br/>
                    <span className="relative z-10 inline-block">
-                      智能服务生态
+                      {t('智能服务生态', 'Smart Service Ecosystem')}
                       <span className="absolute bottom-2 left-0 w-full h-3 bg-[#FFEB69] -z-10 opacity-60"></span>
                    </span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                   无论是寻找职业发展的新机遇，还是寻求商业合作的新可能，JustPai 都是您值得信赖的伙伴。加入我们，共同推动中国新运维产业的发展。
+                   {t('无论是寻找职业发展的新机遇，还是寻求商业合作的新可能，JustPai 都是您值得信赖的伙伴。加入我们，共同推动中国新运维产业的发展。', 'Whether you are seeking career growth or business collaboration opportunities, JustPai is your trusted partner. Join us to advance the next-generation operations industry together.')}
                 </p>
              </div>
              <div className="hidden lg:block w-full h-64 lg:h-96"></div>
@@ -1568,18 +1697,18 @@ function JoinPage() {
              <div className={`rounded-[32px] p-8 md:p-10 flex flex-col group ${CARD_THEME_GLOW}`}>
                 <div className="flex items-center gap-3 mb-6">
                    <h2 className="text-3xl font-bold text-gray-900">
-                      加入 <span className="font-bold" style={{ color: '#FFEB69' }}>派</span> 队
+                      {t('加入', 'Join the ')}<span className="font-bold" style={{ color: '#FFEB69' }}>{t('派', 'Pai')}</span>{t(' 队', ' Team')}
                    </h2>
                 </div>
                 <p className="text-gray-600 leading-relaxed text-lg flex-1 mb-8">
-                   这么派平台为优秀人才提供了更丰富的机会、更广阔的发展空间，欢迎大家与我们一起在多元的业务场景中学习成长，不断为客户创造价值和为充实提高自己而做出的努力！
+                   {t('这么派平台为优秀人才提供了更丰富的机会、更广阔的发展空间，欢迎大家与我们一起在多元的业务场景中学习成长，不断为客户创造价值和为充实提高自己而做出的努力！', 'JustPai offers broader opportunities and growth space for outstanding talents. Grow with us across diverse business scenarios while continuously creating value for customers.')}
                 </p>
                 <div className="flex items-center gap-3 mt-auto pt-6 border-t border-gray-50">
                    <div className="p-3 bg-blue-50 rounded-full text-blue-500">
                       <Phone size={24} />
                    </div>
                    <div>
-                      <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">联系电话</div>
+                      <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">{t('联系电话', 'Phone')}</div>
                       <div className="text-xl font-bold text-gray-900">400-668-1997</div>
                    </div>
                 </div>
@@ -1587,17 +1716,17 @@ function JoinPage() {
  
              <div className={`rounded-[32px] p-8 md:p-10 flex flex-col group ${CARD_THEME_GLOW}`}>
                 <div className="flex items-center gap-3 mb-6">
-                   <h2 className="text-3xl font-bold text-gray-900">成为 <span className="text-[#A1D573]">平台合作伙伴</span></h2>
+                   <h2 className="text-3xl font-bold text-gray-900">{t('成为 ', 'Become a ')}<span className="text-[#A1D573]">{t('平台合作伙伴', 'Platform Partner')}</span></h2>
                 </div>
                 <p className="text-gray-600 leading-relaxed text-lg flex-1 mb-8">
-                   欢迎携手融入强大的“这么派”平台全国供应链生态圈，借助平台线上线下服务体系，拓展业务、实现更大商业价值。让我们一起赋能企业园区与商业楼宇，提升资产价值！
+                   {t('欢迎携手融入强大的“这么派”平台全国供应链生态圈，借助平台线上线下服务体系，拓展业务、实现更大商业价值。让我们一起赋能企业园区与商业楼宇，提升资产价值！', 'Join the nationwide JustPai supply chain ecosystem and expand your business through our integrated online and offline service system. Let us empower enterprise parks and commercial buildings together.')}
                 </p>
                 <div className="flex items-center gap-3 mt-auto pt-6 border-t border-gray-50">
                     <div className="p-3 bg-[#A1D573]/10 rounded-full text-[#A1D573]">
                       <Mail size={24} />
                    </div>
                    <div>
-                      <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">合作邮箱</div>
+                      <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">{t('合作邮箱', 'Business Email')}</div>
                       <div className="text-xl font-bold text-gray-900">service@justpai.com</div>
                    </div>
                 </div>
@@ -1608,18 +1737,18 @@ function JoinPage() {
        <section className="py-24 px-6 bg-gray-50">
           <div className="max-w-7xl mx-auto text-center">
              <div className="inline-block mb-12">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">我们的核心价值观</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('我们的核心价值观', 'Our Core Values')}</h2>
                 <div className="h-1 w-20 bg-[#A1D573] mx-auto rounded-full"></div>
              </div>
              
              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                 {[
-                   { name: "以客户为中心", icon: Heart, color: "text-red-500" },
-                   { name: "拥抱挑战", icon: Target, color: "text-blue-500" },
-                   { name: "以奋斗者为本", icon: Users, color: "text-orange-500" },
-                   { name: "诚信", icon: ShieldCheck, color: "text-green-500" },
-                   { name: "团队合作", icon: Handshake, color: "text-purple-500" },
-                   { name: "负责", icon: CheckCircle2, color: "text-indigo-500" },
+                   { name: t("以客户为中心", "Customer First"), icon: Heart, color: "text-red-500" },
+                   { name: t("拥抱挑战", "Embrace Challenges"), icon: Target, color: "text-blue-500" },
+                   { name: t("以奋斗者为本", "Striver-Oriented"), icon: Users, color: "text-orange-500" },
+                   { name: t("诚信", "Integrity"), icon: ShieldCheck, color: "text-green-500" },
+                   { name: t("团队合作", "Teamwork"), icon: Handshake, color: "text-purple-500" },
+                   { name: t("负责", "Accountability"), icon: CheckCircle2, color: "text-indigo-500" },
                 ].map((value, i) => (
                    <div key={i} className={`p-6 flex flex-col items-center justify-center rounded-2xl ${CARD_THEME_GLOW}`}>
                       <div className={`w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mb-4 ${value.color}`}>
@@ -1635,7 +1764,8 @@ function JoinPage() {
    );
 }
 
-function HelpPage() {
+function HelpPage({ isEn = false }) {
+  const t = (zh, en) => (isEn ? en : zh);
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleQuestion = (index) => {
@@ -1657,8 +1787,8 @@ function HelpPage() {
                <HelpCircle size={16} className="text-[#A1D573]" />
                <span className="text-xs font-bold text-gray-600 tracking-wide">HELP CENTER</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">帮助中心</h1>
-            <p className="text-gray-500 text-lg">常见问题解答与服务指南</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{t('帮助中心', 'Help Center')}</h1>
+            <p className="text-gray-500 text-lg">{t('常见问题解答与服务指南', 'FAQs and Service Guide')}</p>
          </div>
       </section>
 
@@ -1672,7 +1802,7 @@ function HelpPage() {
                         className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                      >
                         <span className={`font-bold text-lg ${openIndex === index ? 'text-[#A1D573]' : 'text-gray-900'}`}>
-                           {item.question}
+                           {item.question[isEn ? 'en' : 'zh']}
                         </span>
                         <ChevronDown 
                            size={20} 
@@ -1684,7 +1814,7 @@ function HelpPage() {
                         className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
                      >
                         <div className="px-6 pb-6 text-gray-600 leading-relaxed bg-gray-50/50 pt-2 border-t border-gray-50">
-                           {item.answer}
+                          {item.answer[isEn ? 'en' : 'zh']}
                         </div>
                      </div>
                   </div>

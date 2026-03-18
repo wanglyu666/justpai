@@ -1,0 +1,127 @@
+const STANDARD_CONTENT_EN = {
+  '环境管理组织': {
+    trigger: 'Triggered for projects longer than 7 days',
+    check: 'On-site duty inspection by upper-level supervisors',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'Establish an environmental control team led by project-party principals to identify, control, and plan around adverse factors on site, and to ensure noise, dust, and odor controls are effectively implemented.',
+      'For new-build, renovation, and maintenance projects, each participating party should organize technicians to complete daily learning of environmental and risk controls on the app before work starts.',
+      'Implement a site environmental inspection mechanism. Inspections can be done daily by participating parties or through random checks by the platform/project team, with image/video records uploaded and corrective actions closed by accountable parties.',
+    ],
+  },
+  '环境管控日报': {
+    trigger: 'Triggered for projects longer than 3 days',
+    check: 'Daily report assessment and standardized daily inspection',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'For new-build, renovation, and maintenance projects, upload standardized on-site photos/videos with project info and date to the platform daily report page according to checklist frequency.',
+      'For key finishing, MEP, low-voltage intelligent, and special-operation projects, perform two environmental checks per day with at least a 4-hour interval and upload records.',
+      'Projects requiring two daily inspections are designated by regional directors/managers during project approval based on project characteristics.',
+    ],
+  },
+  '环境管控周报': {
+    trigger: 'Triggered for projects longer than 7 days',
+    check: 'Weekly report assessment and standardized daily inspection',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'For projects longer than one week, submit an environmental weekly report in the platform, including: work summary (noise/dust/odor operations), inspection and rectification records, training records with dated photos, next-week planning, and other key risks.',
+    ],
+  },
+  '噪音控制': {
+    check: 'On-site inspections by project team and supervisors, weekly report review, platform daily checks, and on-site patrols',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'Loud shouting and disruptive behavior are strictly prohibited. Control all noise sources that may affect non-work areas.',
+      'Noisy processing that can be completed off-site must be moved off-site.',
+      'Batch noisy work that must be performed on-site should be scheduled during non-working hours.',
+      'Use high-efficiency, low-noise power tools.',
+      'Adopt low-noise construction processes and techniques.',
+    ],
+    longTrigger: 'Applies to high-noise operations such as major ceiling/wall/floor works, demolition, MEP installation, and other listed noisy activities.',
+  },
+  '气味控制': {
+    check: 'On-site inspections by project team and supervisors, weekly report review, platform daily checks, and on-site patrols',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'Use green and low-odor materials and processes.',
+      'Metal/wood/paint deep processing should be completed off-site; only assembly is performed on-site.',
+      'If wood/paint work must be done on-site, set up an independent processing area and enforce ventilation.',
+      'Ensure ventilation and deodorization by opening windows and maximizing fresh/return air operation; perform and record daily checks.',
+      'If natural and building ventilation is insufficient, deploy portable axial fans according to platform standards and record checks.',
+      'Odor-producing paint/coating/adhesive work should be scheduled during non-working hours.',
+      'Paints and solvents should be sealed and centrally stored in ventilated designated areas.',
+      'Control odor pathways by isolating work areas and sealing related vents/ducts as required.',
+    ],
+    longTrigger: 'Applies to odor-sensitive operations including coating/painting, adhesive, insulation, and other listed odor-generating activities.',
+  },
+  '废料与垃圾管理': {
+    check: 'On-site inspections by project team and supervisors, weekly report review, platform daily checks, and on-site patrols',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'For one-day maintenance jobs, all waste must be removed on the same day.',
+      'For projects lasting 2+ days, construction waste must be collected in designated areas after each working day.',
+      'Arrange waste hauling vehicles in advance according to volume and site conditions.',
+      'Assign dedicated cleaners for new-build/renovation projects and maintain sufficient bags/tools on site.',
+      'Classify and bag waste continuously; do not create indoor dust during cleanup.',
+      'Place bagged waste in designated property collection points during approved time windows.',
+      'Use dedicated routes/elevators for waste transfer with proper floor protection; dragging bags is prohibited.',
+      'After transfer, routes and elevators must be cleaned immediately.',
+      'Used containers must be checked and cleared of residual chemicals before disposal.',
+      'Never pour paint/solvent/oil/adhesive into drains.',
+      'Residual hazardous waste must be returned to corresponding material manufacturers.',
+    ],
+    longTrigger: 'Applies to large-volume construction and demolition scenarios where continuous waste management is required.',
+  },
+  '个人物品和食物管理': {
+    check: 'On-site inspections by project team and supervisors, weekly report review, platform daily checks, and on-site patrols',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'Strictly limit personal items brought into work areas to what is necessary for the day.',
+      'Personal living items must be stored in backpacks; personal tools must be stored in toolboxes.',
+      'Backpacks and toolboxes must be neatly centralized and covered with platform-standard dustproof cloth.',
+      'Do not place personal items inside client furniture or non-work rooms.',
+      'Day-shift workers must not eat in user working areas; night-shift meals must be centralized in designated spots.',
+      'Littering food boxes, bottles, bags, or tissues in work/user areas is prohibited.',
+      'Any spilled food or liquid must be cleaned immediately.',
+    ],
+    longTrigger: 'Applies to projects where personnel and materials remain on-site for extended periods.',
+  },
+  '局部小维修的环境控制': {
+    trigger: 'Triggered for maintenance projects shorter than 3 days',
+    check: 'On-site inspections by project team and supervisors, weekly report review, platform daily checks, and on-site patrols',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'No on-site processing work is allowed in minor maintenance zones.',
+      'Use high-efficiency and low-noise tools in minor maintenance tasks.',
+      'Adopt low-noise methods and techniques.',
+      'Strictly limit thinner/organic solvent usage and reduce adhesive-based methods.',
+      'Do not use volatile, toxic, or radioactive materials.',
+      'Seal and remove maintenance materials promptly after use.',
+      'Tools and materials must be centrally placed on the platform-standard 1.5m x 1.5m protection cloth, not directly on finished surfaces.',
+    ],
+  },
+  '材料控制': {
+    trigger: 'Triggered upon project initiation',
+    check: 'On-site inspections by project team and supervisors, weekly report review, platform daily checks, patrols, and incoming-material acceptance',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'Before material entry, verify certificates, quality reports, radiation/formaldehyde tests, and compliance with indoor environment control standards.',
+      'Strictly limit thinner and organic solvents; prefer modular/prefabricated methods to reduce adhesive-heavy work.',
+      'Prohibit harmful volatile chemicals and radioactive materials.',
+      'Chemical materials must be stored in dedicated cool, ventilated, and dry zones, and sealed/removed promptly after use.',
+    ],
+  },
+  '现场排风机': {
+    check: 'On-site inspections by project team and supervisors, daily/weekly report review, platform daily checks, and patrols',
+    reference: 'Environment Management Manual\nSection 4: Environmental Control Measures',
+    rules: [
+      'Deploy exhaust fans in enclosed or odor-prone areas according to platform standards and keep them continuously operating as required.',
+      'Check fan operation and airflow effectiveness at scheduled intervals, with photo/video records uploaded to the platform.',
+      'Adjust fan quantity and placement based on site layout and operation intensity to ensure adequate air exchange.',
+      'During non-work periods, maintain the minimum ventilation strategy required by project control standards.',
+    ],
+    longTrigger: 'Applies to enclosed, dusty, odor-prone, coating, and demolition-related operations where forced ventilation is required.',
+  },
+};
+
+export default STANDARD_CONTENT_EN;
