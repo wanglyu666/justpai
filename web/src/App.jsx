@@ -6,6 +6,7 @@ import { STANDARD_SLUGS, getCategoryAndKeyBySlug } from './data/standardSlugs';
 import { ALL_CASES, ALL_NEWS } from './data/content';
 import { contentImageSrc } from './data/contentApi';
 import { useContent } from './context/ContentContext';
+import { HeroParallax } from './components/HeroParallax';
 import ScrollVelocity from './components/ScrollVelocity';
 import { BRAND_GRADIENT, PAI_GRADIENT_TEXT, BG_GRADIENT_LIGHT, CARD_THEME_GLOW } from './constants/theme';
 
@@ -50,16 +51,16 @@ const SERVICE_ICONS = [
 ];
 
 const FAQ_DATA = [
-  "这么派平台有几种注册方式？有什么区别？",
-  "购物车中为什么有普通产品和定制产品，有什么区别？",
-  "什么是派服务？什么是派产品？",
-  "派产品的价格包括什么？",
-  "派产品中默认的起订量为什么不是1，需求量低于起订量怎么下单？",
-  "派平台的积分有什么作用？",
-  "我不是很专业，不会下单，怎么办？",
-  "想订购“派产品”需要企业注册吗？",
-  "下单过程中遇到问题怎么办？",
-  "推荐码有什么用？"
+  { question: "我们能提供什么服务？", answer: "平台提供设施运维、空间改造、机电改造、弱电改造、场所智能改造、地网建设、商办空间设计及定制服务等8大工程服务类别。商店包含平台提供的300余种单项运维和工程产品，通常由1个或多个产品组合形成1项服务，客户可自行选择，也可由平台客服协助搭配。" },
+  { question: "购物车中为什么有普通产品和定制产品，有什么区别？", answer: "普通产品指品牌、型号、计量价格及服务内容明确的标准产品；定制产品则由平台根据您的需求，对形状、颜色、规格、材料等进行个性化加工。定制产品因无法二次销售，不支持退换货，但同样享有1年保修服务。" },
+  { question: "我们的服务范围？", answer: "我们的服务范围目前涵盖以下城市：哈尔滨、长春、吉林、沈阳、大连、苏州、南京、无锡、常州、泰州、南通、常熟、张家港、太仓、昆山、吴江、杭州、宁波、绍兴、温州、嘉兴、金华、台州、厦门、福州、广州、深圳、东莞、佛山、珠海、中山、江门、南宁、海口、三亚、北京、天津、石家庄、唐山、太原、上海、郑州、青岛、济南、成都、贵阳、昆明、合肥、芜湖、武汉、南昌、长沙、重庆、西安、咸阳。如果您有其他城市的服务需求，欢迎联系客服，我们将尽力为您安排。" },
+  { question: "商店的价格包括什么？", answer: "商店中的价格中包含产品采购、运输与仓储、安装与调试、保修与保险、成品保护与保洁等直接和间接成本，保证全国一致的客户体验。" },
+  { question: "商店中默认的起订量为什么不是1，需求量低于起订量怎么下单？", answer: "起订量用于合理分摊运输、仓储、安装、调试、保修、保险及现场保护保洁等成本。若未达到起订量，欢迎致电客服热线 4006-681997，我们将根据您的实际需求协助组合选购两种及以上产品并完成下单。" },
+  { question: "这么派平台有几种注册方式？有什么区别？", answer: "这么派平台提供快速注册与企业认证两种客户注册方式。快速注册仅需填写用户名、联系电话、电子邮箱等基本信息，即可浏览平台；企业认证需提交营业执照、银行账户、授权书等资料，认证后可享受平台浏览、在线咨询、产品下单、线下签约及数据报表等线上线下一体化服务。" },
+  { question: "我是新手，不会下单，怎么办？", answer: "如您有下单需求，欢迎致电客服热线 4006-681997，我们将根据您的实际需求为您提供专业咨询与下单指导。您也可在平台填写咨询单，待我们与您确认订单信息后，即可协助您完成下单。" },
+  { question: "想在商店中订购需要企业注册吗？", answer: "目前平台部分功能需要客户先进行企业认证才可开放，如果您想了解“派产品”的价格和在线订购产品，需要先进行企业认证，平台审核通过后即可使用相关功能。" },
+  { question: "平台对订单服务执行过程中是如何管理的？", answer: "平台对订单服务执行全过程实施管理，从下单（非平台订单以立项为起点）至质保期结束。管理内容包括服务立项（设定进度、材料、质量、EHS等目标）及全过程标准化执行监管，确保现场服务规范有序。用户可通过平台或APP在线查看过程资料、参与节点验收，并进行报修、意见反馈与评价等操作。" },
+  { question: "你们是中介平台吗？", answer: "我们不是中介平台。我们是一家专注于工程领域的全链条服务自营平台，致力于为客户提供从项目建设到运维的一站式服务。与以解决用工需求、管理人力资源为核心的服务平台不同，我们始终围绕工程业务全流程，自主把控服务标准与交付质量。" },
 ];
 
 function formatDate(value) {
@@ -162,7 +163,7 @@ export default function App() {
                  </div>
                  <p className="text-gray-400 text-sm">
                     专注企业快速工程服务<br/>
-                    Powered by Intelligent Tech.
+                    Just better, Just pai.
                  </p>
               </div>
               
@@ -179,15 +180,17 @@ export default function App() {
               <div>
                  <h4 className="font-bold text-white mb-6">联系</h4>
                  <ul className="space-y-4 text-gray-400 text-sm">
-                    <li>上海市xx区xx路xx号</li>
-                    <li>hello@justpai.com</li>
-                    <li>400-888-8888</li>
+                    <li>北京市：朝阳区住邦2000商务中心4号楼</li>
+                    <li>上海市：普陀区长寿路587号沙田大厦25层</li>
+                    <li>深圳市：龙华区民治街道秋瑞大厦3层</li>
+                    <li>service@justpai.com</li>
+                    <li>4006-681997</li>
                  </ul>
               </div>
            </div>
            
            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 text-xs text-gray-500">
-              <p>&copy; 2024 JustPai Technology. All rights reserved.</p>
+              <p>&copy; 2026 JustPai Technology. All rights reserved.  ICP证：京ICP备2023009635号 京公网安备11010502056416号 京B2-20232412</p>
            </div>
         </footer>
       )}
@@ -916,7 +919,7 @@ function StandardsPage({ onNavigate }) {
                            <div className="animate-fade-in-up">
                              <h4 className="text-xl font-bold text-gray-900 mb-4">杜绝参差不齐，交付即是标杆</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               我们摒弃了传统工程行业“看师傅手艺”的盲盒模式。通过建立详尽的工艺工法库、节点验收规范和防错机制，确保每一颗螺丝的拧紧扭矩、每一根线缆的走向弧度都符合统一的工业级要求。无论是百平米的微改，还是万平米的整装，JustPai 的质量输出始终如一。
+                               我们摒弃了传统工程行业“看师傅手艺”的盲盒模式。通过建立详尽的工艺工法库、节点验收规范和防错机制，确保我们在全国的每一处施工都符合统一的工业级要求。无论是百平米的微改，还是万平米的整装，JustPai的质量输出始终如一。
                              </p>
                            </div>
                          )}
@@ -925,25 +928,25 @@ function StandardsPage({ onNavigate }) {
                            <div className="animate-fade-in-up">
                              <h4 className="text-xl font-bold text-gray-900 mb-4">有温度的体验，有刻度的规范</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               服务不仅仅是维修设备，更是维护客户的心情。我们对工程师的仪容仪表、入场话术、现场沟通及撤场清理等每一个交互触点进行了严格规定。从佩戴防静电鞋套到铺设专属保护垫，将隐形的“服务态度”转化为可见的“服务刻度”。
+                             Justpai平台围绕自有师傅管理、全国客服支持与售后巡检机制，建立统一的服务流程与执行规范，并通过数字化平台实现从项目立项、施工交付到评价反馈、售后维护的全流程闭环管理，确保不同地区、不同项目都能为客户提供高效、专业、稳定且有温度的服务体验。
                              </p>
                            </div>
                          )}
 
                          {activeStandardIntro === '流程标准化' && (
                            <div className="animate-fade-in-up">
-                             <h4 className="text-xl font-bold text-gray-900 mb-4">数字闭环，消除信息黑洞</h4>
+                             <h4 className="text-xl font-bold text-gray-900 mb-4">数字闭环，让运维更透明</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               依托 JustPai 强大的线上数字化平台，我们将复杂的工程运维切分为标准的SOP节点。从需求发起、智能派单、现场签到、过程记录到最终验收验收评价，所有流程线上流转、不可逆、防篡改。让进度100%透明，让管理成本降至最低。
+                               依托 JustPai 最新的月海1.0运维面板系统，我们将复杂的工程运维切分为标准的SOP节点。从需求发起、智能派单、现场签到、过程记录到最终验收验收评价，所有流程线上流转、不可逆、防篡改。让进度100%透明，让管理成本降至最低。
                              </p>
                            </div>
                          )}
 
                          {activeStandardIntro === 'EHS标准化' && (
                            <div className="animate-fade-in-up">
-                             <h4 className="text-xl font-bold text-gray-900 mb-4">敬畏生命，守护绿色底线</h4>
+                             <h4 className="text-xl font-bold text-gray-900 mb-4">安全生产，守护绿色底线</h4>
                              <p className="text-gray-600 leading-relaxed">
-                               EHS (Environment, Health, Safety) 是我们一切工作的前提。我们制定了极其严苛的环保与安全双轨红线。从噪音与粉尘的源头抑制、有毒有害物质的零容忍，到高空与动火作业的强制审批，JustPai 致力于打造零伤害、零污染的施工运维环境。
+                               EHS (Environment, Health, Safety) 是我们一切工作的前提。我们依据国家现行施工环境、健康、安全规范及行业标准，制定了极其严苛的环保与安全双轨红线。从噪音与粉尘的源头抑制、有毒有害物质的零容忍，到高空与动火作业的强制审批，JustPai 致力于打造零伤害、零污染的施工运维环境。
                              </p>
                            </div>
                          )}
@@ -1003,7 +1006,7 @@ function HomePage({ onNavigate }) {
           </div>
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.1] text-gray-900">
-            重塑你的 <br className="hidden md:block"/>
+            重塑您的 <br className="hidden md:block"/>
             <span className="relative inline-block">
               <span className="relative z-10">办公基础设施</span>
               <span className="absolute bottom-2 left-0 w-full h-4 bg-[#FFEB69] -z-10 opacity-60 rounded-sm"></span>
@@ -1011,8 +1014,8 @@ function HomePage({ onNavigate }) {
           </h1>
           
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            JustPai 将传统的设施运维转化为可视化的数字资产。
-            通过智能网点管理，让您的办公空间更智能、更高效、更具未来感。
+            JustPai 将传统的装饰工程与设施运维转化为可视化的数字资产。
+            通过智能平台管理，让您的办公空间更智能、更高效、更具未来感。
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-20">
@@ -1064,93 +1067,48 @@ function HomePage({ onNavigate }) {
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#FFEB69] transition-colors inline-block mb-8">
                 <Cpu size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">IoT 智能硬件托管</h3>
-              <p className="text-gray-500 max-w-md">我们将传统的空调、照明、门禁系统接入 JustPai 智能网络。实时监控设备健康状态，实现预测性维护，彻底告别设备停机。</p>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">一站式智能驱动工程服务平台</h3>
+              <p className="text-gray-500 max-w-md">以智能科技重构工程服务，通过数字化系统整合产品商城、项目管理及全国供应链，实现全链条的标准化与透明化管理。</p>
             </div>
 
             <div className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#A1D573] transition-colors inline-block mb-8">
                 <Activity size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">极速响应协议</h3>
-              <p className="text-gray-500 text-sm">基于位置服务的智能派单系统，工程师如同网络终端，最快30分钟内抵达现场。</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">极速响应网络</h3>
+              <p className="text-gray-500 text-sm">200城+3000服务商，全国覆盖的敏捷工程服务。</p>
             </div>
 
             <div className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#FFEB69] transition-colors inline-block mb-8">
                 <Zap size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">能源优化与碳积分</h3>
-              <p className="text-gray-500 text-sm">通过AI算法优化电力消耗，为您节省成本的同时，记录企业的绿色碳足迹。</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">智慧协同生态闭环</h3>
+              <p className="text-gray-500 text-sm">打通需求、交付、运维全流程，构建多方高效协同的工程服务生态，降本增效，赋能企业长效发展。 </p>
             </div>
 
              <div className={`col-span-1 md:col-span-2 rounded-3xl p-8 group relative overflow-hidden ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#A1D573] transition-colors inline-block mb-8">
                 <Layers size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">全生命周期资产管理</h3>
-              <p className="text-gray-500 max-w-md">从设备采购到报废回收，每一笔资产流转都清晰可查。为您的企业建立透明、可溯源的固定资产账本。</p>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">全生命周期数字化管理</h3>
+              <p className="text-gray-500 max-w-md">一体化智能管理，透明可溯的固定资产账本，让企业工程运维更高效、更可控。</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="solutions" className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
-          <div className="flex-1 relative">
-             <div className="relative bg-white border border-gray-100 rounded-2xl p-8 aspect-square flex flex-col justify-center overflow-hidden shadow-2xl">
-                <div className="absolute top-8 left-8 right-8 bottom-0 bg-gray-50 rounded-t-xl border-t border-l border-r border-gray-200 p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
-                   <div className="flex gap-2 mb-4">
-                      <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                   </div>
-                   <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white h-24 rounded-lg shadow-sm border border-gray-100"></div>
-                      <div className="bg-white h-24 rounded-lg shadow-sm border border-gray-100"></div>
-                      <div className="bg-white h-32 col-span-2 rounded-lg mt-2 border border-[#A1D573]/30 relative overflow-hidden">
-                        <div className="absolute inset-x-0 bottom-0 h-1 bg-[#A1D573]"></div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-          </div>
-          
-          <div className="flex-1 space-y-8">
-             <h2 className="text-3xl md:text-5xl font-bold text-gray-900">不仅是维修，<br/>更是<span className="text-[#A1D573]">全域智能</span></h2>
-             <p className="text-gray-500 text-lg">JustPai 提供的不仅仅是随叫随到的维修师傅。我们将每一次服务数字化，为您生成可视化的空间健康报告。</p>
-             
-             <ul className="space-y-6">
-                <li className="flex items-start gap-4">
-                   <div className="p-2 rounded-lg bg-gray-50 text-gray-900">
-                      <BarChart3 size={20} />
-                   </div>
-                   <div>
-                      <h4 className="font-bold text-gray-900">实时数据看板</h4>
-                      <p className="text-gray-500 text-sm mt-1">随时掌握办公室能耗、设备状态与维护成本。</p>
-                   </div>
-                </li>
-                <li className="flex items-start gap-4">
-                   <div className="p-2 rounded-lg bg-gray-50 text-gray-900">
-                      <ShieldCheck size={20} />
-                   </div>
-                   <div>
-                      <h4 className="font-bold text-gray-900">合规与安全审计</h4>
-                      <p className="text-gray-500 text-sm mt-1">自动生成消防、电力安全巡检报告，符合ISO标准。</p>
-                   </div>
-                </li>
-                <li className="flex items-start gap-4">
-                   <div className="p-2 rounded-lg bg-gray-50 text-gray-900">
-                      <Globe size={20} />
-                   </div>
-                   <div>
-                      <h4 className="font-bold text-gray-900">多站点统一管理</h4>
-                      <p className="text-gray-500 text-sm mt-1">无论您在上海、北京还是深圳，通过一个Dashboard管理所有办公室。</p>
-                   </div>
-                </li>
-             </ul>
-          </div>
-        </div>
+      <section id="solutions" className="bg-white">
+        <HeroParallax
+          heading={(
+            <>
+              最新升级
+              <br />
+              运维面板<span className="text-[#A1D573]">月海1.0</span>
+            </>
+          )}
+          description="JustPai 提供的不仅仅是随叫随到的维修师傅。我们将每一次服务数字化，为您生成可视化的空间健康报告。"
+        />
       </section>
 
       <section className="py-24 px-6 bg-white">
@@ -1555,11 +1513,11 @@ function AboutPage() {
                      <span className="font-bold text-gray-700 text-sm group-hover:text-black">{service.name}</span>
                   </div>
                ))}
-               <div className="group bg-gray-50 p-6 rounded-2xl border border-dashed border-gray-200 hover:border-gray-400 transition-all flex flex-col items-center justify-center aspect-square cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-400 mb-4">
-                     <ChevronRight size={24} />
+               <div className="group bg-white p-6 rounded-2xl border border-gray-100 hover:border-[#FFEB69] hover:shadow-lg transition-all flex flex-col items-center justify-center aspect-square cursor-pointer">
+                  <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 mb-4 group-hover:bg-[#FFEB69]/20 group-hover:text-black transition-colors">
+                     <ShieldCheck size={24} strokeWidth={1.5} />
                   </div>
-                  <span className="font-bold text-gray-500 text-sm">查看更多</span>
+                  <span className="font-bold text-gray-700 text-sm group-hover:text-black">认证检测</span>
                </div>
             </div>
          </div>
@@ -1707,14 +1665,14 @@ function HelpPage() {
       <section className="py-16 px-6 min-h-[60vh] bg-white relative z-0">
          <div className="max-w-4xl mx-auto">
             <div className="space-y-4">
-               {FAQ_DATA.map((question, index) => (
+               {FAQ_DATA.map((item, index) => (
                   <div key={index} className="border border-gray-100 rounded-xl overflow-hidden hover:border-gray-300 transition-colors bg-white">
                      <button 
                         onClick={() => toggleQuestion(index)}
                         className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                      >
                         <span className={`font-bold text-lg ${openIndex === index ? 'text-[#A1D573]' : 'text-gray-900'}`}>
-                           {question}
+                           {item.question}
                         </span>
                         <ChevronDown 
                            size={20} 
@@ -1726,8 +1684,7 @@ function HelpPage() {
                         className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
                      >
                         <div className="px-6 pb-6 text-gray-600 leading-relaxed bg-gray-50/50 pt-2 border-t border-gray-50">
-                           {/* 占位符文字 */}
-                           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                           {item.answer}
                         </div>
                      </div>
                   </div>
