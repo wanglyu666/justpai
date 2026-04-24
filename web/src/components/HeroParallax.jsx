@@ -1,22 +1,24 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'motion/react';
 
+/** 门户首屏产品条：图片来自 public/quickshot（与 admin 端 @quickshot 同源资源） */
 export const products = [
-  { title: 'Moonbeam', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/moonbeam.png' },
-  { title: 'Cursor', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/cursor.png' },
-  { title: 'Rogue', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/rogue.png' },
-  { title: 'Editorially', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/editorially.png' },
-  { title: 'Editrix AI', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/editrix.png' },
-  { title: 'Pixel Perfect', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/pixelperfect.png' },
-  { title: 'Algochurn', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/algochurn.png' },
-  { title: 'Aceternity UI', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/aceternityui.png' },
-  { title: 'Tailwind Master Kit', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png' },
-  { title: 'SmartBridge', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/smartbridge.png' },
-  { title: 'Renderwork Studio', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/renderwork.png' },
-  { title: 'Creme Digital', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/cremedigital.png' },
-  { title: 'Golden Bells Academy', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/goldenbellsacademy.png' },
-  { title: 'Invoker Labs', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/invoker.png' },
-  { title: 'E Free Invoice', thumbnail: 'https://www.aceternity.com/images/products/thumbnails/new/efreeinvoice.png' },
+  // 首行 flex-row-reverse：从左第 3 格对应本段索引 2，将「首页」图置于此位（与 0 对调）
+  { title: '咨询单详情页', thumbnail: '/quickshot/咨询单详情页.png' },
+  { title: '咨询与反馈', thumbnail: '/quickshot/咨询与反馈.png' },
+  { title: '首页', thumbnail: '/quickshot/首页.png' },
+  { title: '订单管理页', thumbnail: '/quickshot/订单管理页.png' },
+  { title: '工程项目管理', thumbnail: '/quickshot/工程项目管理.png' },
+  { title: '项目详情页', thumbnail: '/quickshot/项目详情页.png' },
+  { title: '项目评价', thumbnail: '/quickshot/项目评价.png' },
+  { title: '新增维保保修', thumbnail: '/quickshot/新增维保保修.png' },
+  { title: '审批流程', thumbnail: '/quickshot/审批流程.png' },
+  { title: '审批流程配置', thumbnail: '/quickshot/审批流程配置.png' },
+  { title: '成功提交', thumbnail: '/quickshot/成功提交.png' },
+  { title: '管理中心', thumbnail: '/quickshot/管理中心.png' },
+  { title: '组织与架构', thumbnail: '/quickshot/组织与架构.png' },
+  { title: '消息中心', thumbnail: '/quickshot/消息中心.png' },
+  { title: '商店', thumbnail: '/quickshot/商店.jpg' },
 ];
 
 function ProductCard({ product, translate }) {

@@ -7,7 +7,7 @@ export default function Editor() {
   const { id: idParam } = useParams();
   const { pathname } = useLocation();
   const isNews = pathname.startsWith('/news');
-  const isNew = pathname.includes('/new');
+  const isNew = pathname.endsWith('/new');
   const navigate = useNavigate();
   const editId = idParam ? String(idParam) : null;
 
