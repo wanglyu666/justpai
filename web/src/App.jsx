@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import { Menu, X, ArrowRight, Activity, Zap, Layers, BarChart3, ShieldCheck, Globe, Cpu, Download, Users, User, UserPlus, Building2, Smartphone, MapPin, Clock, Wrench, PenTool, Sofa, Droplets, Fan, Leaf, Trash2, FileText, Router, ChevronRight, CheckCircle2, Heart, Handshake, Phone, Mail, HelpCircle, ChevronDown, ChevronLeft, Calendar, Newspaper, ArrowLeft, Target, Share2, Facebook, Twitter, Linkedin, AlertTriangle } from 'lucide-react';
 import STANDARDS_DB from './data/standards';
@@ -1191,32 +1191,36 @@ function HomePage({ onNavigate, isEn = false }) {
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#FFEB69] transition-colors inline-block mb-8">
                 <Cpu size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">{t('一站式智能驱动工程服务平台', 'One-stop Intelligent Engineering Service Platform')}</h3>
-              <p className="text-gray-500 max-w-md">{t('以智能科技重构工程服务，通过数字化系统整合产品商城、项目管理及全国供应链，实现全链条的标准化与透明化管理。', 'Rebuild engineering services with smart technology by integrating product marketplace, project management, and nationwide supply chain into one standardized and transparent workflow.')}</p>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">{t('智能化工程', 'Intelligent Engineering')}</h3>
+              <p className="text-gray-500 max-w-md">{t('通过智能化解决方案，让建筑更智慧，让空间更智能，促进企业高效、绿色、节能、可持续性发展。', 'Through intelligent solutions, we make buildings and spaces smarter and support enterprises in achieving efficient, green, low-carbon, and sustainable development.')}</p>
             </div>
 
             <div className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#A1D573] transition-colors inline-block mb-8">
                 <Activity size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">{t('极速响应网络', 'Rapid Response Network')}</h3>
-              <p className="text-gray-500 text-sm">{t('200城+3000服务商，全国覆盖的敏捷工程服务。', 'Agile engineering services covering 200+ cities with 3,000+ service providers.')}</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t('场所地网建设工程', 'Venue & Site Network Engineering')}</h3>
+              <p className="text-gray-500 text-sm">{t('200城+3000服务商，助力企业在全国二线、三线城市新建、扩展、升级自身的商业网络。', '200+ cities and 3,000+ service partners help enterprises build, expand, and upgrade their commercial presence across second- and third-tier cities nationwide.')}</p>
             </div>
 
             <div className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
               <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#FFEB69] transition-colors inline-block mb-8">
                 <Zap size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">{t('智慧协同生态闭环', 'Smart Collaboration Ecosystem')}</h3>
-              <p className="text-gray-500 text-sm">{t('打通需求、交付、运维全流程，构建多方高效协同的工程服务生态，降本增效，赋能企业长效发展。', 'Connect demand, delivery, and operations into one lifecycle to build a high-efficiency collaborative ecosystem that reduces cost and improves long-term growth.')}</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t('楼宇即时入驻整装', 'Instant Move-In Turnkey Fit-Out for Buildings')}</h3>
+              <p className="text-gray-500 text-sm">{t('专注楼宇办公空间整装领域的全流程解决方案，通过标准化、装配化、平台化带来效率的极致提升。', 'End-to-end solutions for office fit-out in commercial buildings, with standardization, industrialized assembly, and a platform model that maximizes efficiency.')}</p>
             </div>
 
-             <div className={`col-span-1 md:col-span-2 rounded-3xl p-8 group relative overflow-hidden ${CARD_THEME_GLOW}`}>
-              <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#A1D573] transition-colors inline-block mb-8">
+             <div className={`col-span-1 md:col-span-2 rounded-3xl p-8 group flex flex-col min-h-[240px] md:min-h-0 md:h-full overflow-hidden ${CARD_THEME_GLOW}`}>
+              <div className="p-3 bg-gray-50 rounded-xl text-gray-900 group-hover:bg-[#A1D573] transition-colors inline-block mb-8 self-start w-fit shrink-0">
                 <Layers size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">{t('全生命周期数字化管理', 'Full Lifecycle Digital Management')}</h3>
-              <p className="text-gray-500 max-w-md">{t('一体化智能管理，透明可溯的固定资产账本，让企业工程运维更高效、更可控。', 'Integrated intelligent management and transparent asset records make enterprise engineering operations more efficient and controllable.')}</p>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">{t('设计与装修工程', 'Design & Fit-Out Engineering')}</h3>
+              <p className="text-gray-500 max-w-md flex-1">{t('敏捷且先进的设计理念，以满足现代企业在发展过程中因人员与环境变化产生的设计工程需求。', 'Agile, forward-looking design thinking to meet the design and engineering needs of modern enterprises as their teams and work environments change through growth.')}</p>
+              <span className="mt-4 self-end inline-flex items-center gap-0.5 text-xs text-gray-400">
+                {t('点击查看我们的设计案例', 'View our design cases')}
+                <ArrowRight size={12} className="shrink-0" strokeWidth={2.5} />
+              </span>
             </div>
           </div>
         </div>
