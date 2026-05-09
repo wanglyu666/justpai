@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
-import { Menu, X, ArrowRight, Activity, Zap, Layers, BarChart3, ShieldCheck, Globe, Cpu, Download, Users, User, UserPlus, Building2, Smartphone, MapPin, Clock, Wrench, PenTool, Sofa, Droplets, Fan, Leaf, Trash2, FileText, Router, ChevronRight, CheckCircle2, Heart, Handshake, Phone, Mail, HelpCircle, ChevronDown, ChevronLeft, Calendar, Newspaper, ArrowLeft, Target, Share2, Facebook, Twitter, Linkedin, AlertTriangle } from 'lucide-react';
+import { Menu, X, ArrowRight, Activity, Zap, Layers, BarChart3, ShieldCheck, Globe, Cpu, Download, Users, User, UserPlus, Building2, Smartphone, MapPin, ListChecks, Wrench, PenTool, Sofa, Droplets, Fan, FileText, PaintBucket, Briefcase, Cable, ChevronRight, CheckCircle2, Heart, Handshake, Phone, Mail, HelpCircle, ChevronDown, ChevronLeft, Calendar, Newspaper, ArrowLeft, Target, Share2, Facebook, Twitter, Linkedin, AlertTriangle } from 'lucide-react';
 import STANDARDS_DB from './data/standards';
 import STANDARD_CONTENT_EN from './data/standards.en';
 import { STANDARD_SLUGS, getCategoryAndKeyBySlug } from './data/standardSlugs';
@@ -29,26 +29,19 @@ const CLIENTS = [
   { name: 'Omron', src: '/client logo/omron.svg' },
 ];
 
-const HISTORY = [
-  { year: "2020", title: { zh: "创立元年", en: "Foundation Year" }, desc: { zh: "公司正式成立，确立“快速工程”服务理念。同年携手西门子，提供全国改选维修年度框架协议服务，奠定行业基础。", en: "The company was founded and established the concept of rapid engineering services. In the same year, we partnered with Siemens on nationwide annual maintenance framework services, laying a strong foundation." } },
-  { year: "2021", title: { zh: "全国扩张", en: "Nationwide Expansion" }, desc: { zh: "北京、上海、深圳分公司相继成立，业务覆盖华北、华东、华南。全国建立50+城市服务商网络，拥有300+专业认证师傅。携手字节跳动，服务互联网巨头。", en: "Branches were established in Beijing, Shanghai, and Shenzhen, covering North, East, and South China. A service network across 50+ cities with 300+ certified engineers was built. We also partnered with ByteDance." } },
-  { year: "2022", title: { zh: "携手头部", en: "Partnering with Industry Leaders" }, desc: { zh: "开辟场所地网建设新业务。携手阿里巴巴，为其全国三四线城市办公室提供地网建设项目服务。与霍尼韦尔达成合作，深化技术壁垒。", en: "Launched new site network infrastructure services. Worked with Alibaba on office network projects in lower-tier cities nationwide. Partnered with Honeywell to strengthen technical capabilities." } },
-  { year: "2023", title: { zh: "战略升级", en: "Strategic Upgrade" }, desc: { zh: "品牌全面升级为“那就这么派”。建立全国四大核心业务区，拓展至150+城市服务商，1000+师傅。研发自有互联网服务平台，探索O2O业务模式。", en: "The brand was fully upgraded to JustPai. Four nationwide core business regions were established, expanding to 150+ city service providers and 1,000+ engineers. We developed our own internet service platform to explore O2O operations." } },
-  { year: "2024", title: { zh: "平台上线", en: "Platform Launch" }, desc: { zh: "“这么派/JustPai”平台及APP正式上线，开启O2O服务新纪元。平台上线500+标准化快速工程及运维产品，整合200+平台城市服务商，构建全域服务生态。", en: "The JustPai platform and app officially launched, opening a new era of O2O services. The platform introduced 500+ standardized rapid engineering and maintenance products, integrating 200+ city service providers." } }
-];
-
 const SERVICE_ICONS = [
   { name: { zh: "空间设计", en: "Space Design" }, icon: PenTool },
-  { name: { zh: "硬装改造", en: "Hard Renovation" }, icon: Wrench },
-  { name: { zh: "软装陈列", en: "Soft Decoration" }, icon: Sofa },
-  { name: { zh: "水电工程", en: "MEP Works" }, icon: Droplets },
-  { name: { zh: "暖通空调", en: "HVAC" }, icon: Fan },
-  { name: { zh: "智能网络", en: "Smart Network" }, icon: Router }, 
-  { name: { zh: "设施运维", en: "Facility O&M" }, icon: Activity },
+  { name: { zh: "装饰工程", en: "Decoration Engineering" }, icon: PaintBucket },
+  { name: { zh: "拎包工程", en: "Move-In Ready Project" }, icon: Briefcase },
+  { name: { zh: "软装陈列", en: "Soft Decoration Display" }, icon: Sofa },
+  { name: { zh: "水电工程", en: "Water & Electrical Engineering" }, icon: Droplets },
+  { name: { zh: "空调工程", en: "Air-Conditioning Engineering" }, icon: Fan },
+  { name: { zh: "弱电工程", en: "Low-Voltage Engineering" }, icon: Cable },
+  { name: { zh: "空间智能化", en: "Space Intelligence" }, icon: Cpu },
+  { name: { zh: "设施运维", en: "Facility Operation & Maintenance" }, icon: Wrench },
   { name: { zh: "办公家具", en: "Office Furniture" }, icon: Layers },
-  { name: { zh: "绿化租赁", en: "Green Leasing" }, icon: Leaf },
-  { name: { zh: "深度保洁", en: "Deep Cleaning" }, icon: Trash2 },
-  { name: { zh: "年框服务", en: "Annual Framework" }, icon: FileText },
+  { name: { zh: "认证检测", en: "Certification & Testing" }, icon: ShieldCheck },
+  { name: { zh: "年框服务", en: "Annual Framework Service" }, icon: FileText },
 ];
 
 const FAQ_DATA = [
@@ -1545,14 +1538,14 @@ function AboutPage({ isEn = false }) {
                   </span>
                </h1>
                <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                  {t('那就这么派，是一家极具创造力的互联网快速工程服务提供商。借助超前的“线上线下一体化”商业模式，为企业提供快速、敏捷、专业的工程服务。', 'JustPai is a highly creative internet-based rapid engineering service provider. With an advanced online-offline integrated model, we deliver fast, agile, and professional services for enterprises.')}
+                  {t('那就这么派，是一家极具创造力的互联网快速工程服务提供商。我们通过构建“线上线下一体化”服务模式，为企业提供快速、敏捷、专业的室内设计与工程服务。', 'JustPai is a highly creative internet-based rapid engineering service provider. By building an online-offline integrated service model, we deliver fast, agile, and professional interior design and engineering services for enterprises.')}
                </p>
             </div>
            <div className="relative h-64 lg:h-96 w-full hidden lg:block">
                <div className={`absolute top-10 right-10 w-64 h-64 rounded-full ${BG_GRADIENT_LIGHT} blur-3xl`}></div>
                <div className="absolute top-0 right-0 w-full h-full flex items-center justify-center">
                   <div className="grid grid-cols-2 gap-4">
-                     <div className="w-40 h-48 bg-[#3A341C]/50 rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col justify-between transform translate-y-8">
+                     <div className="w-40 h-48 bg-[#3A341C]/50 rounded-2xl shadow-xl p-6 flex flex-col justify-between transform translate-y-8">
                         <Users className="text-[#FFEB69] w-10 h-10" />
                         <div>
                            <div className="text-3xl font-bold text-[#FFEB69]">1000+</div>
@@ -1575,15 +1568,15 @@ function AboutPage({ isEn = false }) {
       <section className="py-24 px-6 relative bg-white z-0">
          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-               <h2 className="text-3xl font-bold text-gray-900">{t('我们的核心优势', 'Our Core Strengths')}</h2>
-               <p className="text-gray-500 mt-2">{t('构建“平台+网络+服务”的完整生态闭环', 'Building a full ecosystem of platform + network + service')}</p>
+               <h2 className="text-3xl font-bold text-gray-900">{t('核心优势', 'Core Strengths')}</h2>
+               <p className="text-gray-500 mt-2">{t('构建“平台+服务网络+标准化”的完整生态闭环', 'Building a complete closed-loop ecosystem of platform, service network, and standardization.')}</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
-                  { title: t("线上数字化平台", "Digital Online Platform"), icon: Smartphone, desc: t("500+标准化快速工程及运维产品，客户可在线咨询、下单。全流程透明化管理，让工程服务像网购一样便捷。", "500+ standardized engineering and operations products with online consultation and ordering. Full-process transparency makes engineering services as easy as e-commerce.") },
-                  { title: t("全国服务网络", "Nationwide Service Network"), icon: MapPin, desc: t("线下服务网络覆盖全国56+核心城市，划分华北、华东、华南、华西十大业务区域，服务能力下沉至4线城市。", "Offline service network covers 56+ core cities across China, with capability extending to lower-tier cities.") },
-                  { title: t("敏捷交付服务", "Agile Delivery Services"), icon: Clock, desc: t("提供年度框架服务及六大类标准化服务。依托全国供应链生态，实现“所需即所得”的高效交付体验。", "Annual framework services and six standardized categories supported by a nationwide supply chain for efficient delivery.") }
+                  { title: t("线上数字化平台", "Online Digital Platform"), icon: Smartphone, desc: t("500+标准化及定制化设计与工程产品，客户可在线咨询、下单，可在线查验订单，可在线服务评价。全流程透明化管理，让工程服务更便捷。", "500+ standardized and customized design and engineering products. Customers can consult and place orders online, check orders online, and evaluate services online. Transparent management throughout the process makes engineering services more convenient.") },
+                  { title: t("全国服务网络", "National Service Network"), icon: MapPin, desc: t("线下服务网络覆盖全国56+核心城市，划分华北、华东、华南、华西十大业务区域，服务能力下沉至3线城市。", "The offline service network covers 56+ core cities nationwide, organized into ten major regions across North, East, South, and West China, with services reaching tier-3 cities.") },
+                  { title: t("标准化服务", "Standardized Service"), icon: ListChecks, desc: t("依托全国服务网络，推行服务、质量、流程、产品及EHS五大统一标准，实现“所需即所得”的高效交付体验。", "Backed by our nationwide service network, we implement five unified standards—service, quality, process, product, and EHS—to deliver an efficient “get what you need” experience.") }
                ].map((item, i) => (
                   <div key={i} className={`rounded-3xl p-8 group ${CARD_THEME_GLOW}`}>
                      <div className={`w-14 h-14 rounded-2xl ${BG_GRADIENT_LIGHT} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
@@ -1597,37 +1590,47 @@ function AboutPage({ isEn = false }) {
          </div>
       </section>
 
-      <section className="py-24 px-6 bg-gray-50">
-         <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-16 text-center">{t('企业发展里程碑', 'Company Milestones')}</h2>
-            <div className="relative pl-8 md:pl-0">
-               <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 -translate-x-1/2 hidden md:block"></div>
-               <div className="absolute left-8 top-0 bottom-0 w-px bg-gray-200 md:hidden"></div>
+      <section className="py-24 px-6 bg-gray-50 overflow-hidden">
+         <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+               <div>
+                  <div className="flex items-center gap-4 mb-8">
+                     <span className="h-px w-16 bg-[#A1D573]"></span>
+                     <span className="text-sm font-bold tracking-[0.28em] text-[#7DBA48] uppercase">
+                        {t('新增', 'New')}
+                     </span>
+                  </div>
 
-               <div className="space-y-12">
-                  {HISTORY.map((item, index) => (
-                     <div key={index} className={`relative flex flex-col md:flex-row items-center ${index % 2 === 0 ? '' : 'md:flex-row-reverse'}`}>
-                        
-                        <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-white border-4 border-[#A1D573] rounded-full -translate-x-1/2 z-10 shadow-[0_0_0_4px_rgba(255,255,255,0.5)]"></div>
+                  <h2 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-8">
+                     {t('互联网平台', 'Internet Platform')}
+                  </h2>
 
-                        <div className={`hidden md:block w-1/2 px-12 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-                           <span className="text-5xl font-bold text-gray-200">{item.year}</span>
+                  <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
+                     {t('“这么派/Justpai”平台及 APP 于 2025 年 1 月正式上线，并获颁国家电信 ICP 许可证，标志着 O2O 企业服务迈入新纪元。平台已上线 500+ 标准化及定制化工程产品，整合了超过 200 家城市服务商与 100 家供应商，共同构建起全域服务生态。', 'The “Justpai” platform and app officially launched in January 2025 and obtained a national telecommunications ICP license, marking a new era for O2O enterprise services. The platform now offers 500+ standardized and customized engineering products, integrating 200+ city service providers and 100+ suppliers to build a full-coverage service ecosystem.')}
+                  </p>
+
+                  <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-8 border-t border-gray-200 pt-8">
+                     {[
+                        { value: '2025.01', label: t('正式上线', 'Launched') },
+                        { value: 'ICP', label: t('电信许可', 'Telecom license') },
+                        { value: '500+', label: t('工程产品', 'Products') },
+                        { value: '200+ / 100+', label: t('服务商 / 供应商', 'Providers / suppliers') },
+                     ].map((item, index) => (
+                        <div key={index}>
+                           <div className="text-2xl md:text-3xl font-bold text-gray-900">{item.value}</div>
+                           <p className="mt-2 text-sm text-gray-500">{item.label}</p>
                         </div>
+                     ))}
+                  </div>
+               </div>
 
-                        <div className="w-full md:w-1/2 pl-12 md:pl-0 md:px-12">
-                           <div className={`p-6 rounded-2xl relative ${CARD_THEME_GLOW}`}>
-                              <span className="md:hidden text-4xl font-bold text-gray-100 absolute right-4 top-4">{item.year}</span>
-                              
-                              <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                                 {item.title[isEn ? 'en' : 'zh']}
-                              </h3>
-                              <p className="text-sm text-gray-500 leading-relaxed text-justify">
-                                 {item.desc[isEn ? 'en' : 'zh']}
-                              </p>
-                           </div>
-                        </div>
-                     </div>
-                  ))}
+               <div className="relative">
+                  <div className="absolute -inset-12 bg-gradient-to-br from-[#FFEB69]/20 via-transparent to-[#A1D573]/25 blur-3xl"></div>
+                  <img
+                     src="/quickshot/首页.png"
+                     alt={t('这么派平台首页界面', 'Justpai platform homepage interface')}
+                     className="relative w-full rounded-[2rem] shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
+                  />
                </div>
             </div>
          </div>
@@ -1645,12 +1648,6 @@ function AboutPage({ isEn = false }) {
                      <span className="font-bold text-gray-700 text-sm group-hover:text-black">{service.name[isEn ? 'en' : 'zh']}</span>
                   </div>
                ))}
-               <div className="group bg-white p-6 rounded-2xl border border-gray-100 hover:border-[#FFEB69] hover:shadow-lg transition-all flex flex-col items-center justify-center aspect-square cursor-pointer">
-                  <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 mb-4 group-hover:bg-[#FFEB69]/20 group-hover:text-black transition-colors">
-                     <ShieldCheck size={24} strokeWidth={1.5} />
-                  </div>
-                  <span className="font-bold text-gray-700 text-sm group-hover:text-black">{t('认证检测', 'Certification & Inspection')}</span>
-               </div>
             </div>
          </div>
       </section>
